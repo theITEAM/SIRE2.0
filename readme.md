@@ -11,7 +11,7 @@ SIRE 2.0 allows for simultaneous estimation of individual additive genetic effec
 
 The following files can be downloaded:
 
-* Windows: [SIREv2.0.zip](https://github.com/theITEAM/SIRE2.0/releases/download/v2.0/SIREv2.0.zip]
+* Windows: [SIREv2.0.zip](https://github.com/theITEAM/SIRE2.0/releases/download/v2.0/SIREv2.0.zip)
 
 * Linux: Not Currently Available
 
@@ -19,7 +19,7 @@ The following files can be downloaded:
 
 ## Documentation
 
-Information about the software can be obtained from the [SIRE 2.0 manual](https://github.com/theITEAM/SIRE2.0/find/v2.0.pdf) or a [paper on BioRxiv](https://www.biorxiv.org/content/10.1101/618363v3.full).
+Information about the software can be obtained from the [SIRE 2.0 manual](https://github.com/theITEAM/SIRE2.0/raw/master/SIRE%202.0%20Manual.pdf) or a [paper on BioRxiv](https://www.biorxiv.org/content/10.1101/618363v3.full))
 
 ## Build
 
