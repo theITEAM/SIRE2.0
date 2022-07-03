@@ -323,7 +323,7 @@ function saveoptions(x)
 
 function exportoptions(x)                                                                    // Plots options for export
 {
-	var na, pngfl=0, txtfl = 0, parfl = 0, evefl = 0, diafl = 0, pt;
+	var na, pngfl=0, txtfl = 0, parfl = 0, evefl = 0, pt;
 	
 	if(page == RUNPAGE && pagesub[page] != 0){ 
 		na = infpagename[pagesub[page]];

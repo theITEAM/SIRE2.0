@@ -4,7 +4,7 @@
 
 // This work is descrivbed in:
 
-// "Estimating individuals’ genetic and non-genetic effects underlying infectious disease transmission from temporal epidemic data"
+// "Estimating individuals’ genetic and non-genetic effects underlying infectious disease transmission from temporal epidemic data" 
 
 // Christopher M. Pooley 1,2*, Glenn Marion 2&, Stephen C. Bishop&, Richard I. Bailey, and Andrea B. Doeschl-Wilson 1& 
 // 1 The Roslin Institute, The University of Edinburgh, Midlothian, EH25 9RG, UK. 
@@ -164,7 +164,7 @@ void diagnostic();                                          // Outputs MCMC diag
 void store_sample();                                        // Stores a sample for the parameter values
 void addsamp(double value, string name);                    // Adds parameter samples to be store for later 
 void output_statistics();                                   // Finds mean and credible interval 
-double correlation(vector <double> &post, vector <double> &bv, vector <long> &ind); // Finds correlation
+double correlation(const vector <double> &val1, const vector <double> &val2, const vector <long> &ind);                                                           // Finds correlation 
 
 void update();
 
@@ -204,7 +204,7 @@ int main (int argc, char *argv[])
   if(argc == 1){ noout = 1; file = "init.xml";}
   if(argc > 1){    // Creates a different seed for different chains
     file = argv[1]; seed = atoi(argv[2]);
-		noout = 1;
+		//noout = 1;
 		/*
     if(file != "init.xml"){
       noout = 2;
@@ -225,7 +225,7 @@ int main (int argc, char *argv[])
     update();                                // Performs MCMC sampling
   } 
 	
-	 if(noout != 0) output_statistics();
+	if(noout != 0) output_statistics();
 }
 	
 void update()
@@ -235,7 +235,7 @@ void update()
   if(s < burnin) burning = 1; else burning = 0;
 
   prop_betagamak();
-	
+
   if(allcheck == 1) check(2);
  
   if(snpfl == 1){ prop_param(); if(mod == SIR) prop_rec();}
@@ -251,7 +251,7 @@ void update()
   }
 	
   if(allcheck == 1) check(5);
-  
+
 	if(randon == 1){
     propq_g();
     propq_f();
@@ -288,6 +288,14 @@ void update()
   }
 	else{
 		if(burning == 0) store_sample();
+	}
+	
+	if(s > 100){   // Updates average breeding values
+		for(int i = 0; i < N; i++){ 		
+			q_g_sum[i] += q_g[i]; q_f_sum[i] += q_f[i]; 
+			if(mod==SIR) q_r_sum[i] += q_r[i];
+		}
+		nqsum++;
 	}
 }
 

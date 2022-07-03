@@ -51,7 +51,7 @@ void traceinit()                                                       // Initia
 
 
   if(geffon == 1 && Z > 1){
-    cout << "Gr. Eff.|Ψ_G|Standard deviation in group effect" << z << "|";
+    cout << "Gr. Eff.|σ_G|Standard deviation in group effect" << "|";
     for(z = 0; z < Z; z++) cout << "Gr. Eff.|G" << z << "|Group effect for trial " << z << "|";
   }
 
@@ -63,10 +63,20 @@ void traceinit()                                                       // Initia
   cout << "Misc.|L_G|Group effect likelihood|";
   cout << "Misc.|Pr|Prior|";
 
-  if(q_g_bv.size() > 0){
-     cout << "Pred. Ac.|qg|Prediction accuracy for qg|";
-     cout << "Pred. Ac.|qf|Prediction accuracy for qf|";
-  }
+
+	for(int i = 0; i < predacc.size(); i++){
+		if(q_g_bv.size() > 0){
+			cout << "Pred. Ac.|"+predacc[i].name+": Sus.|"+predacc[i].name+" for sus.|";
+		}
+		
+		if(q_f_bv.size() > 0){
+			cout << "Pred. Ac.|"+predacc[i].name+": Inf.|"+predacc[i].name+" for inf.|";
+		}
+		
+		if(q_r_bv.size() > 0){
+			cout << "Pred. Ac.|"+predacc[i].name+": Rec.|"+predacc[i].name+" for rec.|";
+		}
+	}
     
   cout << "\n";
   cout.flush();
@@ -115,33 +125,49 @@ void traceplot()                                                      // Outputs
 
   cout << Ldtest << "|" << Lie << "|" << Ligeff_g << "|" << Pri << "|";
   
-  if(q_g_bv.size() > 0){
-    long i;
-    double avq, avq2, avqbre, avqbre2, avqqbre;
-      
-    nqav++; for(i = 0; i < N; i++){ q_g_av[i] += q_g[i]; q_f_av[i] += q_f[i]; if(mod == SIR) q_r_av[i] += q_r[i];}
-     
-    avq = 0; avq2 = 0; avqbre = 0; avqbre2 = 0; avqqbre = 0;
-    for(i = 0; i < N; i++){
-      avq += q_g_av[i]/nqav; avq2 += (q_g_av[i]/nqav)*(q_g_av[i]/nqav); 
-      avqbre += q_g_bv[i]; avqbre2 += q_g_bv[i]*q_g_bv[i]; 
-      avqqbre += (q_g_av[i]/nqav)*q_g_bv[i];
-    }
-    cout << (avqqbre/N - (avq/N)*(avqqbre/N))/(sqrt(avq2/N - (avq/N)*(avq/N))*sqrt(avqbre2/N - (avqbre/N)*(avqbre/N))) << "|";
-  
-    avq = 0; avq2 = 0; avqbre = 0; avqbre2 = 0; avqqbre = 0;
-    for(i = 0; i < N; i++){
-      avq += q_f_av[i]/nqav; avq2 += (q_f_av[i]/nqav)*(q_f_av[i]/nqav); 
-      avqbre += q_f_bv[i]; avqbre2 += q_f_bv[i]*q_f_bv[i]; 
-      avqqbre += (q_f_av[i]/nqav)*q_f_bv[i];
-    }
-    cout << (avqqbre/N - (avq/N)*(avqqbre/N))/(sqrt(avq2/N - (avq/N)*(avq/N))*sqrt(avqbre2/N - (avqbre/N)*(avqbre/N))) << "|";
-  }
-  
+	if(nqsum < 2){
+		for(int pa = 0; pa < predacc.size(); pa++){
+			if(q_g_bv.size() > 0) cout << "0|";
+			if(q_f_bv.size() > 0) cout << "0|";
+			if(mod == SIR && q_r_bv.size() > 0) cout << "0|";
+		}
+	}
+	else{
+		vector <double> qgav = q_g_sum, qfav = q_f_sum, qrav = q_r_sum;
+	
+		for(int i = 0; i < N; i++){
+			qgav[i] /= nqsum;
+			qfav[i] /= nqsum;
+			if(mod == SIR) qrav[i] /= nqsum;
+		}
+
+		for(int pa = 0; pa < predacc.size(); pa++){
+			if(q_g_bv.size() > 0) cout << correlation(q_g_bv,qgav,predacc[pa].ind) << "|";
+			if(q_f_bv.size() > 0) cout << correlation(q_f_bv,qfav,predacc[pa].ind) << "|";
+			if(mod == SIR && q_r_bv.size() > 0) cout << correlation(q_r_bv,qrav,predacc[pa].ind) << "|";
+		}
+	}
+	
   cout << "\n";
   cout.flush();
 }
 
+double correlation(const vector <double> &val1, const vector <double> &val2, const vector <long> &ind)
+{
+	double av1 = 0, av2 = 0, av11 = 0, av22 = 0, av12 = 0;
+  
+	int jmax = ind.size();
+	for(int j = 0; j < jmax; j++){
+		int i = ind[j];
+	
+		av1 += val1[i]; av2 += val2[i]; 
+		av11 += val1[i]*val1[i]; av22 += val2[i]*val2[i];
+		av12 += val1[i]*val2[i];  
+  }
+	av1 /= jmax; av2 /= jmax; av11 /= jmax; av22 /= jmax; av12 /= jmax;
+
+  return (av12 - av1*av2)/(sqrt(av11 - av1*av1)*sqrt(av22 - av2*av2));
+}
 
 void eventplot()                                            // Outputs infection and recovery events
 {
@@ -229,7 +255,11 @@ void diagnostic()                                                          // Ou
   long j;
 
   fmin = 1; fmax = 0; fav = 0; nfav = 0;
-  for(j = 0; j < N; j++){ if(ntr_I[j] > 0){ f = nac_I[j]/ntr_I[j]; if (f > fmax) fmax = f; if(f < fmin) fmin = f; fav += f; nfav++;}}
+  for(j = 0; j < N; j++){ if(ntr_I[j] > 0){ 
+		f = nac_I[j]/ntr_I[j]; if(f > fmax) fmax = f; if(f < fmin) fmin = f; fav += f; nfav++;}
+		
+		if(f == 0) cout << "zero:" << indid[j]; 
+	}
   cout << "shiftI ac:" << fav/nfav << ", " << fmin << "-" << fmax << "|";
 
   if(mod == SIR){
@@ -347,10 +377,6 @@ void store_sample()                                                    // Stores
 		}			 
 		*/
   }
-	
-	for(i = 0; i < N; i++){ 		
-		q_g_av[i] += q_g[i]; q_f_av[i] += q_f[i]; q_r_av[i] += q_r[i]; nqav++;
-	}
 }
 
 void addsamp(double value, string name)
@@ -436,41 +462,20 @@ void output_statistics()                                               // Output
 		cout << pstore[v].name << "\t" << stat.mean << "\t(" << stat.CImin << " - " << stat.CImax << ")\t" << stat.ESS << "\n";
 	}
 	
-	for(i = 0; i < N; i++){ q_g_av[i] /= nqav; q_f_av[i] /= nqav; q_r_av[i] /= nqav;}
+	for(i = 0; i < N; i++){ q_g_sum[i] /= nqsum; q_f_sum[i] /= nqsum; q_r_sum[i] /= nqsum;}
 	
 	cout << "\n";
 	for(pa = 0; pa < predacc.size(); pa++){
 		if(q_g_bv.size() != 0){
-			cout <<  predacc[pa].name << " prediction accuracy for susceptibility = " << correlation(q_g_av,q_g_bv,predacc[pa].ind) << "\n";
+			cout <<  predacc[pa].name << " prediction accuracy for susceptibility = " << correlation(q_g_sum,q_g_bv,predacc[pa].ind) << "\n";
 		}
 		
 		if(q_f_bv.size() != 0){
-			cout <<  predacc[pa].name << " prediction accuracy for infectivity = " << correlation(q_f_av,q_f_bv,predacc[pa].ind) << "\n";
+			cout <<  predacc[pa].name << " prediction accuracy for infectivity = " << correlation(q_f_sum,q_f_bv,predacc[pa].ind) << "\n";
 		}
 		
 		if(q_r_bv.size() != 0){
-			cout <<  predacc[pa].name << " prediction accuracy for recoverability = " << correlation(q_r_av,q_r_bv,predacc[pa].ind) << "\n";
+			cout <<  predacc[pa].name << " prediction accuracy for recoverability = " << correlation(q_r_sum,q_r_bv,predacc[pa].ind) << "\n";
 		}
 	}
-}
-
-double correlation(vector <double> &post, vector <double> &bv, vector <long> &ind)  // Finds correlation
-{
-	long j, i;
-	double avbv = 0, avbv2 = 0, avpost = 0, avpost2 = 0, avbvpost = 0, nav = 0;
-	
-	for(j = 0; j < ind.size(); j++){
-		i = ind[j]; 
-
-		avbv += bv[i]; avbv2 += bv[i]*bv[i];
-	  avpost += post[i]; avpost2 += post[i]*post[i]; 
-		
-	  avbvpost += bv[i]*post[i];
-		nav++;
-	}
-	avbv /= nav; avbv2 /= nav;
-	avpost /= nav; avpost2 /= nav;
-	avbvpost /= nav;
-
-	return (avbvpost - avbv*avpost)/(sqrt(avbv2 -avbv*avbv)*sqrt(avpost2 -avpost*avpost));
 }

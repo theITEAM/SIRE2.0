@@ -101,6 +101,7 @@ function finalaction(i)                                                         
 		case RADIOORDER: order = val; indplotst=[]; orderind(); break;
 		case RADIOENABLE: if(text == "Yes") data[val].enable = 1; else data[val].enable = 0; collectvariables(); break;
 		case RADIORAND: randon = val; break;
+		case RADIOBREEDVAL: breedvaltype = val; break;
 		}
 		break;
 		
@@ -387,7 +388,7 @@ function finalaction(i)                                                         
 	
 	case NEWMODBUT: startnewmodel(); break;
 		
-	case PDFBUT: new_win = nw.Window.open('SIRE_Manual_v1.0.pdf'); break;
+	case PDFBUT: new_win = nw.Window.open('SIRE 2.0 Manual.pdf'); break;
 	
 	case PDFBUT2: new_win = nw.Window.open('paper_bioRxiv.pdf'); break;
 		

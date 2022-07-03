@@ -28,6 +28,9 @@ long envon=0;                                                     // Set to 1 if
 long geffon=0;                                                    // Set to 1 if group effects on
 long domon=0;                                                     // Set to 1 if dominance is on
 
+int Itinitflag = 0;                                               // Used in testing if initial flag is set
+int Rtinitflag = 0;
+	
 long ndiagtest;                                                   // Diagnostic tests
 vector <double> diagtest_logSe, diagtest_logomSe;
 vector <double> diagtest_logSp, diagtest_logomSp;
@@ -95,8 +98,8 @@ vector <double> q_g, q_f, q_r;                                    // Additive ge
 vector <double> e_g, e_f, e_r;                                    // Residual contribution
 
 vector <double> q_g_bv, q_f_bv, q_r_bv;                           // Stores the breeding values
-double nqav;
-vector <double> q_g_av, q_f_av, q_r_av;                           // Calculates estimated breeding values
+double nqsum;
+vector <double> q_g_sum, q_f_sum, q_r_sum;                        // Calculates estimated breeding values
 
 struct PredAcc{
 	string name;

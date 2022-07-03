@@ -75,12 +75,12 @@ void propvare()                                               // Proposes change
             case 5: vare_rr = te; if(burning == 1) jumpvare_rr *= downfac; break;
           }
 
-          if(jumpvare_gg < 0.001) jumpvare_gg = 0.001;
-          if(jumpvare_gf < 0.001) jumpvare_gf = 0.001;
-          if(jumpvare_gr < 0.001) jumpvare_gr = 0.001;
-          if(jumpvare_ff < 0.001) jumpvare_ff = 0.001;
-          if(jumpvare_fr < 0.001) jumpvare_fr = 0.001;
-          if(jumpvare_rr < 0.001) jumpvare_rr = 0.001;
+          if(jumpvare_gg < 0.1) jumpvare_gg = 0.1;
+          if(jumpvare_gf < 0.1) jumpvare_gf = 0.1;
+          if(jumpvare_gr < 0.1) jumpvare_gr = 0.1;
+          if(jumpvare_ff < 0.1) jumpvare_ff = 0.1;
+          if(jumpvare_fr < 0.1) jumpvare_fr = 0.1;
+          if(jumpvare_rr < 0.1) jumpvare_rr = 0.1;
         }
       }
     }

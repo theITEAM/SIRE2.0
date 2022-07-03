@@ -89,12 +89,12 @@ void propvara()                                            // Proposes changes c
             case 5: vara_rr = te; if(burning == 1) jumpvara_rr *= downfac; break;
           }
 
-          if(jumpvara_gg < 0.001) jumpvara_gg = 0.001;
-          if(jumpvara_gf < 0.001) jumpvara_gf = 0.001;
-          if(jumpvara_gr < 0.001) jumpvara_gr = 0.001;
-          if(jumpvara_ff < 0.001) jumpvara_ff = 0.001;
-          if(jumpvara_fr < 0.001) jumpvara_fr = 0.001;
-          if(jumpvara_rr < 0.001) jumpvara_rr = 0.001;
+          if(jumpvara_gg < 0.1) jumpvara_gg = 0.1;
+          if(jumpvara_gf < 0.1) jumpvara_gf = 0.1;
+          if(jumpvara_gr < 0.1) jumpvara_gr = 0.1;
+          if(jumpvara_ff < 0.1) jumpvara_ff = 0.1;
+          if(jumpvara_fr < 0.1) jumpvara_fr = 0.1;
+          if(jumpvara_rr < 0.1) jumpvara_rr = 0.1;
         }
       }
     }

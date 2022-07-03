@@ -81,7 +81,7 @@ void prope_r()                                             // Makes proposals to
     }
 
     propvare();
-    PBPe_r();
+    //PBPe_r(); 
   }
 
   time_e_r += clock();

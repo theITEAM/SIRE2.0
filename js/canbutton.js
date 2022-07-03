@@ -333,6 +333,11 @@ function canbutplot(i,ov)                                                       
 		drawline(x+ddx,y+dy/2+ddy,x+ddx+ddx2,y+dy/2,col,THICKLINE);
 		break;
 		
+	case EXAMPTITLEBUT:
+		col = BLACK; 
+		plottext(text,x+11,y+16,exampletitlefont,col);
+		break;
+		
 	case TABLEHEADBUT:
 		gettabcol(val,dy);
 		if(ov == 1 && dy > 0) fillrect(x, y, dx, dy, col2);

@@ -68,35 +68,38 @@ void prope_g()                                                          // Makes
   getP();
 
   for(loop = 0; loop < 3; loop++){
-    for(j = 0; j < N; j++){
-      e_old = e_g[j];
-      e_new = e_old + normal(0,jumpe_g);
+		if(true){ 
+			for(j = 0; j < N; j++){
+				e_old = e_g[j];
+				e_new = e_old + normal(0,jumpe_g);
 
-      dJ = (exp(e_new)-exp(e_old))*sumj[j];
-      dL = -beta*dJ;
-      dPri = priorind(prior_e_g,e_new)-priorind(prior_e_g,e_old);
+				dJ = (exp(e_new)-exp(e_old))*sumj[j];
+				dL = -beta*dJ;
+				dPri = priorind(prior_e_g,e_new)-priorind(prior_e_g,e_old);
 
-      if(infstat[j] == 0) dL += e_new - e_old;
-      if(mod == SIR) dLe = -0.5*((e_new*e_new - e_old*e_old)*Pgg + 2*(e_new - e_old)*(e_f[j]*Pgf + e_r[j]*Pgr));
-      else dLe = -0.5*((e_new*e_new - e_old*e_old)*Pgg + 2*(e_new - e_old)*(e_f[j]*Pgf));
+				if(infstat[j] == 0) dL += e_new - e_old;
+				if(mod == SIR) dLe = -0.5*((e_new*e_new - e_old*e_old)*Pgg + 2*(e_new - e_old)*(e_f[j]*Pgf + e_r[j]*Pgr));
+				else dLe = -0.5*((e_new*e_new - e_old*e_old)*Pgg + 2*(e_new - e_old)*(e_f[j]*Pgf));
 
-      al = exp(dL+dLe+dPri);
-      ntr_e_g++;
-      if(ran() < al){
-        nac_e_g++;
+				al = exp(dL+dLe+dPri);
+				ntr_e_g++;
+				if(ran() < al){
+					nac_e_g++;
 
-        e_g[j] = e_new;
-        Li += dL; J_mc += dJ; Pri += dPri;
-        Lie += dLe;
+					e_g[j] = e_new;
+					Li += dL; J_mc += dJ; Pri += dPri;
+					Lie += dLe;
 
-        if(burning == 1) jumpe_g *= upfac;
-      }
-      else{
-        if(burning == 1) jumpe_g *= downfac;
-      }
-    }
+					if(burning == 1) jumpe_g *= upfac;
+				}
+				else{
+					if(burning == 1) jumpe_g *= downfac;
+				}
+			}
+		}
+		
     propvare();
-    PBPe_g();
+    //PBPe_g();
   }
 
   time_e_g += clock();

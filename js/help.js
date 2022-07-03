@@ -184,6 +184,36 @@ function helpbuts()
 		text = param[psel].desc+"\n"; 
 		break;
 		
+	case 36: 
+		title = "Relationship matrix";
+		text = "This matrix determines the genetic relationships between individuals in the system (either obtained from a pedigree or through defining a genomic relationship matrix).\nFORMAT: Requires a table in .csv or .txt format. The heading line should contain the IDs of individuals. Below this the table represents a square matrix giving the relationship matrix between those individuals.";
+		break;
+		
+	case 37: 
+		title = "Inverse relationship matrix";
+		text = "This relationship matrix determines the genetic relationships between individuals in the system (either obtained from a pedigree or through defining a genomic relationship matrix). If based on a pedigree, the inverse of the relationship matrix is sparse.\nFORMAT: Requires a table in .csv or .txt format. The heading line should contain the IDs of individuals. Below this the table represents a square matrix giving the inverse relationship matrix between those individuals.";
+		break;
+		
+	case 38: 
+		title = "Inverse relationship matrix list";
+		text = "The inverse of the relationship matrix is usually sparse (because it contains only non-zero elements for self and parent/sibling relationships). This format allows for only non-zero elements of the inverse relationship matrix to be specified, greatly reducing the size of the file required. FORMAT: Requires a table in .csv or .txt format. The first line gives a list of all individual ID which determines their order in the matrix. The subsequent lines contain three columns giving the x and y position in the matrix followed by the matrix element value. Note, because the matrix is symmetric only the upper triangular elements of the matrix need to be specified.";
+		break;
+		
+	case 39: 
+		title = "Pedigree";
+		text = "Rather than specify a relatiobnship matrix, here we specify who is the parent of whom. FORMAT: Requires a table in .csv or .txt format with three columns giving the ID of individuals and their two parents. If an individual's parent is unknown (or they are no being considered in the analysis) it is entered as '.' (e.g. .";
+		break;
+		
+	case 40: 
+		title = "Breeding values";
+		text = "These are the true values for polygenic contributions to the traits (note, usually these are unknown unless the data has been simulated). Adding them as data allows for SIRE to estimate prediction accuracies for the traits.\nFORMAT: Requires a table in .csv or .txt format. One of the columns must give individual IDs and another the breeding values.";
+		break;
+		
+	case 41: 
+		title = "Prediction Accuracy";
+		text = "Prediction accuracy measures how well SIRE estimates the true breeding values. Here the user specifies the individuals to measure the prediction accuracy.\nFORMAT: Requires a table in .csv or .txt format. A single column giving the ID of individuals is required.";
+		break;
+		
 	case 99:
 		title = "Replace";
 		text = "This information already exists. Would you like to replace it?";

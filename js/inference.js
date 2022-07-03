@@ -219,7 +219,7 @@ function startinference(numch)                                                  
 	for(d = 0; d < data.length; d++){
 		switch(data[d].variety){
 		case "trial":
-			st += 'trial="'+(ncol+1)+'" ';
+			st += 'group="'+(ncol+1)+'" ';
 			for(i = 0; i < N; i++){
 				if(inddata.ind[i].trialnum == -1) mat[i].push(".");
 				else mat[i].push(inddata.ind[i].trialnum);
@@ -244,7 +244,8 @@ function startinference(numch)                                                  
 	for(d = 0; d < data.length; d++){
 		switch(data[d].variety){
 		case "infection":
-			st += 'It="'+(ncol+1)+'" ';
+			if(load_init_times == 1) st += 'It_init="'+(ncol+1)+'" ';
+			else st += 'It="'+(ncol+1)+'" ';
 			for(i = 0; i < N; i++) mat[i].push(inddata.ind[i].It);
 			ncol++;
 			break;
@@ -254,7 +255,9 @@ function startinference(numch)                                                  
 	for(d = 0; d < data.length; d++){
 		switch(data[d].variety){
 		case "recovery":
-			st += 'Rt="'+(ncol+1)+'" ';
+			if(load_init_times == 1)st += 'Rt_init="'+(ncol+1)+'" ';
+			else st += 'Rt="'+(ncol+1)+'" ';
+			
 			for(i = 0; i < N; i++) mat[i].push(inddata.ind[i].Rt);
 			ncol++;
 			break;
@@ -285,10 +288,15 @@ function startinference(numch)                                                  
 		case "diagtest":
 			if(flag == 0) st += 'diagtest="'+(ncol+1); else st += ','+(ncol+1);
 			for(i = 0; i < N; i++){
-				stt = "";
-				for(j = 0; j < inddata.ind[i].diagtest[flag].length; j++){
-					if(stt != "") stt += ",";
-					stt += "["+inddata.ind[i].diagtest[flag][j].val+","+inddata.ind[i].diagtest[flag][j].t+"]";
+				if(inddata.ind[i].trial == "."){
+					stt = ".";
+				}
+				else{
+					stt = "";
+					for(j = 0; j < inddata.ind[i].diagtest[flag].length; j++){
+						if(stt != "") stt += ",";
+						stt += "["+inddata.ind[i].diagtest[flag][j].val+","+inddata.ind[i].diagtest[flag][j].t+"]";
+					}
 				}
 				mat[i].push(stt);
 			}
@@ -329,16 +337,30 @@ function startinference(numch)                                                  
 	}
 	if(flag > 0) st += '" ';
 	
+	var brevalflag = "false";
 	for(d = 0; d < data.length; d++){
 		switch(data[d].variety){
 		case "breval":
-			st += 'qg="'+(ncol+1)+'" ';
-			for(i = 0; i < N; i++) mat[i].push(inddata.ind[i].g);
-			ncol++;
-			
-			st += 'qf="'+(ncol+1)+'" ';
-			for(i = 0; i < N; i++) mat[i].push(inddata.ind[i].f);
-			ncol++;
+			brevalflag = "true";
+			switch(data[d].type){
+				case "sus":
+					st += 'qg="'+(ncol+1)+'" ';
+					for(i = 0; i < N; i++) mat[i].push(inddata.ind[i].g);
+					ncol++;
+					break;
+					
+				case "inf":
+					st += 'qf="'+(ncol+1)+'" ';
+					for(i = 0; i < N; i++) mat[i].push(inddata.ind[i].f);
+					ncol++;
+					break;
+					
+				case "rec":
+					st += 'qr="'+(ncol+1)+'" ';
+					for(i = 0; i < N; i++) mat[i].push(inddata.ind[i].r);
+					ncol++;
+					break;
+			}
 			break;
 		}
 	}
@@ -371,7 +393,7 @@ function startinference(numch)                                                  
 			}
 			for(i = 0; i < N; i++){ if(map[i] == -1){ alertp("Matrix map not set."); return;}}
 		
-			if(data[d].variety == "invrel") st += "<AINV>\n"; else st += "<A>\n";
+			if(data[d].variety == "invrel") st += "<Ainv>\n"; else st += "<A>\n";
 			
 			for(i = 0; i < N; i++){
 				for(ii = 0; ii < N; ii++){
@@ -379,14 +401,14 @@ function startinference(numch)                                                  
 				}
 			}
 			
-			if(data[d].variety == "invrel") st += "</AINV>\n"; else st += "</A>\n";
+			if(data[d].variety == "invrel") st += "</Ainv>\n"; else st += "</A>\n";
 			break;
 		}
 	}
 	
 	for(d = 0; d < data.length; d++){
 		switch(data[d].variety){
-		case "invrellist":
+		case "invrellist": 
 			ids = data[d].id; 
 			NN = ids.length;
 			if(NN != N){ alertp(NN+" "+N+"Matrix wrong size."); return;}
@@ -400,12 +422,80 @@ function startinference(numch)                                                  
 			}
 			for(i = 0; i < N; i++){ if(map[i] == -1){ alertp("Matrix map not set."); return;}}
 			
-			st += "<AINVLIST>\n"; 
-			for(j = 0; j < data[d].x.length; j++){
-				st +=  map[data[d].x[j]] + "\t" + map[data[d].y[j]] + "\t" + data[d].val[j] + "\n";
+			if(data[d].variety == "invrellist"){
+				st += "<Ainv_nonzero>\n"; 
+				for(j = 0; j < data[d].x.length; j++){
+					st +=  map[data[d].x[j]] + "\t" + map[data[d].y[j]] + "\t" + data[d].val[j] + "\n";
+				}
+				st += "</Ainv_nonzero>\n"; 
 			}
-			st += "</AINVLIST>\n"; 
 			break;
+				
+		case "ped":
+			st += "<pedigree>\n"; 
+			for(j = 0; j < data[d].id.length; j++){
+				var indname = data[d].id[j];
+				
+				var ii = 0; while(ii < N && inddata.ind[ii].id != indname) ii++;
+				if(ii == N){
+					alert("Error loading pedigree data. '"+indname+"' does not exist");
+					return;
+				}
+			
+				st += ii;
+				
+				var indname = data[d].par1[j];
+				if(indname == ".") st += "\t.";
+				else{
+					var ii = 0; while(ii < N && inddata.ind[ii].id != indname) ii++;
+					if(ii == N){
+						alert("Error loading pedigree data. '"+indname+"' does not exist");
+						return;
+					}
+					
+					st += "\t" + ii;
+				}
+				
+				var indname = data[d].par2[j];
+				if(indname == ".") st += "\t.";
+				else{
+					var ii = 0; while(ii < N && inddata.ind[ii].id != indname) ii++;
+					if(ii == N){
+						alert("Error loading pedigree data. '"+indname+"' does not exist");
+						return;
+					}
+					st += "\t" + ii;
+				}
+				st += "\n";
+			}
+			st += "</pedigree>\n"; 
+			break;
+		}
+	}
+	
+	for(d = 0; d < data.length; d++){
+		switch(data[d].variety){
+			case "predac":
+				if(brevalflag == "false"){
+					alert("To estimate prediction accuracies breeding values for some or all of the traits must be added");
+					return;					
+				}
+				
+				st += "<prediction_accuracy";
+				st += " name='"+data[d].name+"'";
+				st += " ind='";
+				
+				if(data[d].id.length == 0){
+					alert("No individual with which to calculate the prediction accuracy.");
+					return;
+				}
+				
+				for(i = 0; i < data[d].id.length; i++){
+					if(i != 0) st += ",";
+					st += data[d].id[i];
+				}
+				st += "'/>\n";
+				break;
 		}
 	}
 	
@@ -1597,9 +1687,18 @@ function checkbeforeinference()                                                 
 		if(isdata("recovery") > 0){ alertp("Cannot have recovery times for an SI model."); changepage(DATAPAGE,0); return 1;}  
 	}
 	
-	if(isdata("rel")+isdata("invrellist")+ isdata("ped") > 1){ alertp("More than one data source for relationships."); changepage(DATAPAGE,0); return 1;}
-			
-	N = inddata.nindtotal;;
+	if(randon == 1){
+		if(isdata("ped")+isdata("rel")+isdata("invrel")+isdata("invrellist") == 0){
+			alert("To incorporate polygenic variation data must be added which gives either the pedigree, relationship matrix or inverse relationship list."); 
+			changepage(DATAPAGE,0); return 1;
+		}
+		if(isdata("ped")+isdata("rel")+isdata("invrel")+isdata("invrellist") > 1){
+			alert("Cannot specify ,pre than one pedigree, relationship matrix or inverse relationship listg."); 
+			changepage(DATAPAGE,0); return 1;
+		}
+	}
+		
+	N = inddata.nindtotal;
 	if(trialtime == 0){
 		if(tpostmin.length == 0){ alertp("Inference 'Begin' time must be set."); return 1;}
 		if(tpostmax.length == 0){ alertp("Inference 'End' time must be set."); return 1;}

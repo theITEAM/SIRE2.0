@@ -1,9 +1,11 @@
 /* Lists all the variables used in the graphical interface */
 
-var randon = 1;  // Determines if random effects are being incorporated
+var randon;      // Determines if random effects are being incorporated
 var envon;       // Determines if environment effects are included in analysis
 var geon;        // Determines if group effects are included in analysis
 var domon;       // Determines if SNP dominance is included
+
+//var breedvaltype="susceptibility";
 
 var ncol, ncoldef=0, ncoldefmax, colname=[], colx=[], colw=[];                     // Define tables of data
 var nrow, row=[], rowwidth=[], rowcopy=[], tablehist=[];

@@ -18,26 +18,26 @@ void priorinit()                                                            // I
   }
 
   if(envon == 1){
-    prior_e_g = nprior; for(j = 0; j < N; j++) addprior(PR_prior_e_g,j,UNIFORM,-3.45,3.45);
-    prior_e_f = nprior; for(j = 0; j < N; j++) addprior(PR_prior_e_f,j,UNIFORM,-3.45,3.45);
-    if(mod == SIR){ prior_e_r = nprior; for(j = 0; j < N; j++) addprior(PR_prior_e_r,j,UNIFORM,-3.45,3.45);}
+    prior_e_g = nprior; for(j = 0; j < N; j++) addprior(PR_prior_e_g,j,UNIFORM,-5,5);
+    prior_e_f = nprior; for(j = 0; j < N; j++) addprior(PR_prior_e_f,j,UNIFORM,-5,5);
+    if(mod == SIR){ prior_e_r = nprior; for(j = 0; j < N; j++) addprior(PR_prior_e_r,j,UNIFORM,-5,5);}
    }
 
   if(randon == 1){
-    prior_q_g = nprior; for(j = 0; j < N; j++) addprior(PR_prior_q_g,j,UNIFORM,-3.45,3.45);
-    prior_q_f = nprior; for(j = 0; j < N; j++) addprior(PR_prior_q_f,j,UNIFORM,-3.45,3.45);
-    if(mod == SIR){ prior_q_r = nprior; for(j = 0; j < N; j++) addprior(PR_prior_q_r,j,UNIFORM,-3.45,3.45);}
+    prior_q_g = nprior; for(j = 0; j < N; j++) addprior(PR_prior_q_g,j,UNIFORM,-5,5);
+    prior_q_f = nprior; for(j = 0; j < N; j++) addprior(PR_prior_q_f,j,UNIFORM,-5,5);
+    if(mod == SIR){ prior_q_r = nprior; for(j = 0; j < N; j++) addprior(PR_prior_q_r,j,UNIFORM,-5,5);}
   }
 
   if(geffon == 1){
-    prior_G = nprior; for(z = 0; z < Z; z++) addprior(PR_prior_G,z,UNIFORM,-2.3,2.3);
+    prior_G = nprior; for(z = 0; z < Z; z++) addprior(PR_prior_G,z,UNIFORM,-3,3);
     prior_siggeff_g = nprior; addprior(PR_prior_siggeff_g,-1,UNIFORM,0,3);
   }
 
   if(snpfl == 1){
-    prior_a_g = nprior; addprior(PR_prior_a_g,-1,UNIFORM,-2.3,2.3);
-    prior_a_f = nprior; addprior(PR_prior_a_f,-1,UNIFORM,-2.3,2.3);
-    if(mod == SIR){ prior_a_r = nprior; addprior(PR_prior_a_r,-1,UNIFORM,-2.3,2.3);}
+    prior_a_g = nprior; addprior(PR_prior_a_g,-1,UNIFORM,-3,3);
+    prior_a_f = nprior; addprior(PR_prior_a_f,-1,UNIFORM,-3,3);
+    if(mod == SIR){ prior_a_r = nprior; addprior(PR_prior_a_r,-1,UNIFORM,-3,3);}
     prior_delta_g = nprior; addprior(PR_prior_delta_g,-1,UNIFORM,-1,1);
     prior_delta_f = nprior; addprior(PR_prior_delta_f,-1,UNIFORM,-1,1);
     if(mod == SIR){ prior_delta_r = nprior; addprior(PR_prior_delta_r,-1,UNIFORM,-1,1);}
@@ -68,9 +68,9 @@ void priorinit()                                                            // I
   }
 
   for(fi = 0; fi < nfi; fi++){
-    prior_fixed_g.push_back(nprior); addprior(PR_prior_fixed_g,fi,UNIFORM,-2.3,2.3);
-    prior_fixed_f.push_back(nprior); addprior(PR_prior_fixed_f,fi,UNIFORM,-2.3,2.3);
-    if(mod == SIR){ prior_fixed_r.push_back(nprior); addprior(PR_prior_fixed_r,fi,UNIFORM,-2.3,2.3);}
+    prior_fixed_g.push_back(nprior); addprior(PR_prior_fixed_g,fi,UNIFORM,-3,3);
+    prior_fixed_f.push_back(nprior); addprior(PR_prior_fixed_f,fi,UNIFORM,-3,3);
+    if(mod == SIR){ prior_fixed_r.push_back(nprior); addprior(PR_prior_fixed_r,fi,UNIFORM,-3,3);}
   }
 }
 
@@ -93,13 +93,18 @@ double priorsamp(long pr, double min, double max, double mid)                   
   for(loop = 0; loop < 100000; loop++){
     switch(priorty[pr]){
       case UNIFORM:
-        if(val1 < min) val1 = min; if(val2 > max) val2 = max;
-        if(val2 == big) val2 = val1 + 0.2;
+				if(val1 > min) min = val1; if(val2 < max) max = val2;
+				
+        //if(val1 < min) val1 = min; if(val2 > max) val2 = max;
+        //if(val2 == big && val1 >= 0) val2 = val1 + 0.2;
         if(mid < val1) mid = val1; if(mid > val2) mid = val2; 
 				
 				if(val1 > val2) emsg("The 'min' and 'max' for the uniform prior must be in the right direct.");
 				if(val1 == val2) val = val1;
-				else val = normal(mid,0.1*(val2-val1));
+				else{
+					double sd = 0.1*(max-min); if(sd > mid) sd = mid; 
+					val = normal(mid,sd);
+				}
         break;
       case GAMMA: val = gammasamp(val1,val2); break;
       case FIX: val = val1; break;
@@ -118,6 +123,16 @@ double prior()                                               // Calculates the t
   double Pr;
 	 
   Pr = 0; for(pr = 0; pr < nprior; pr++) Pr += priorind(pr,getpriorval(pr));
+	
+	/*
+	double sum = 0;
+	for(pr = 0; pr < nprior; pr++){
+		double val = priorind(pr,getpriorval(pr));
+		sum += val;
+		cout << pr << " " << sum << " " << val << " " << getpriorval(pr) << "  "<< priorval1[pr] << " " << priorval2[pr] << " pr\n";
+	}
+	*/
+	
   return Pr;
 }
 

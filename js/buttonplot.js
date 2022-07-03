@@ -283,6 +283,7 @@ function butplot(i,ov)                                                          
 		case RADIOORDER: selval = order; break;
 		case RADIOENABLE: if(data[val].enable == 1) selval = "Yes"; else selval = "No"; val = text; break;
 		case RADIORAND: selval = randon; break;
+		case RADIOBREEDVAL: selval = datatemp.type; break;
 		}
 	
 		if(val == selval) col2 = BLACK;
@@ -299,7 +300,7 @@ function butplot(i,ov)                                                          
 			col3 = GREY;  if(over == i) col3 = DGREY;
 		}
     
-		plotlabel(buttext[i],x+20,y+16,RADIOFONT,col3,dx-20);
+		plotlabel(buttext[i],x+20,y+14,RADIOFONT,col3,dx-20);
 		
 		if(col2 != WHITE){
 			x += 3; y += 5; r -= 3;

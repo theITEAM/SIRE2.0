@@ -141,7 +141,7 @@ void prope_f()                                              // Performs posterio
     }
 
     propvare();
-    MBPe_f();
+    //MBPe_f(); 
     //PBPe_fnew();
   }
 

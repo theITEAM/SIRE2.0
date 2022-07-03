@@ -57,18 +57,21 @@ function placeob()                                                              
 				addcanbutton("Note, all individuals are assumed susceptible prior to the beginning time.",x+15,y,150,0,-1,TEXTBUT2,-1,-1); y += 58;
 			}
 			else{
-				addcanbutton("Begin: "+tpostmin,width-350,y,125,30,MINMAXBIGBUT,MINMAXBIGBUT,-1,4);
-				addcanbutton("End: "+tpostmax,width-350,y+30,125,30,MINMAXBIGBUT,MINMAXBIGBUT,-1,5);
+				addcanbutton("Begin: "+tpostmin,width-350,y+75,125,30,MINMAXBIGBUT,MINMAXBIGBUT,-1,4);
+				addcanbutton("End: "+tpostmax,width-350,y+105,125,30,MINMAXBIGBUT,MINMAXBIGBUT,-1,5);
 		
-				addcanbutton("Begin: "+tobsmin,width-350,y+80,125,30,MINMAXBIGBUT,MINMAXBIGBUT,-1,10);
-				addcanbutton("End: "+tobsmax,width-350,y+110,125,30,MINMAXBIGBUT,MINMAXBIGBUT,-1,11);
+				addcanbutton("Begin: "+tobsmin,width-350,y-5,125,30,MINMAXBIGBUT,MINMAXBIGBUT,-1,10);
+				addcanbutton("End: "+tobsmax,width-350,y+25,125,30,MINMAXBIGBUT,MINMAXBIGBUT,-1,11);
 				
-				addcanbutton("This represents the range in time over which interence is performed.",x+15,y,150,0,-1,TEXTBUT2,-1,-1);
-				y += 25;
-				addcanbutton("Note, all individuals are assumed susceptible prior to the beginning time.",x+15,y,150,0,-1,TEXTBUT2,-1,-1); y += 58;
-				
-				addcanbutton("The time range over which infection and/or recovery events are observed",x+15,y,150,0,-1,TEXTBUT2,-1,-1);
+					
+				addcanbutton("The time range over which infection and/or recovery events are observed:",x+15,y,150,0,-1,TEXTBUT2,-1,-1);
 				y += 58;
+				y += 25;
+				addcanbutton("The time range over which interence is performed:",x+15,y,150,0,-1,TEXTBUT2,-1,-1);
+				y += 25;
+				addcanbutton("(usually the same as the observation period but can be extended for prediction.)",x+15,y,150,0,-1,TEXTBUT2,-1,-1); 
+				y += 58;
+			
 			}
 
 			addcanbutton("To choose different times for each contact group click",x+15,y,150,0,-1,TEXTBUT2,-1,-1);
@@ -117,6 +120,10 @@ function placeob()                                                              
 		case OBEXAMP:
 			if(val3) addcanbutton(val,x,y,textwidth(val,examplefont)+20,40,EXAMPBUT,EXAMPBUT,val2,val3);
 			else addcanbutton(val,x,y,textwidth(val,examplefont)+20,20,EXAMPBUT,EXAMPBUT,val2,-1);
+			break;
+			
+		case OBEXAMPTITLE:
+			addcanbutton(val,x-10,y,0,0,-1,EXAMPTITLEBUT,val2,val3);
 			break;
 
 		case OBTEXT:

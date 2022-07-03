@@ -161,7 +161,7 @@ function setsize()                                                              
     canw = width; canh = height;
 
 	tablewidth = width-246; tableheight = height-193; tablewidthbig = width - 212;
-	tablewidthdata = width-220; tableheightdata = height-223; if(randon == 1) tableheightdata -= 10;
+	tablewidthdata = width-220; tableheightdata = height-223; tableheightdata -= 40;
 	tablewidthdesc = width-220; tableheightdesc = height-143;
 	
 	setupheight = Math.floor((height-133)/trialtimedy)*trialtimedy; setupwidth = width-222;
@@ -299,7 +299,8 @@ function startnewmodel()                                                        
 	tpostmin = ""; tpostmax = "";
 	tobsmin = ""; tobsmax = "";
 	
-	modtype = SIR; envon = 1; geon = 1; domon = 1; order = IDORD; trialtime = 0; tposttrialmin=[]; tposttrialmax=[];
+	modtype = SIR; randon = 0; envon = 0; geon = 1; domon = 1; dataerror="";
+	order = IDORD; trialtime = 0; tposttrialmin=[]; tposttrialmax=[];
 	infres={}; varval=[];
 	fileToLoadlist=[];
 	changepage(DESCPAGE,-1);

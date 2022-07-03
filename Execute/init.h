@@ -80,6 +80,7 @@ void init()                                                       // Initialises
   if(geffon == 1){
     geff_g.resize(Z);
     siggeff_g = priorsamp(prior_siggeff_g,0,5,0.1);
+	
     for(z = 0; z < Z; z++){
       do{ geff_g[z] = normal(0,siggeff_g);}while(priorind(prior_G,geff_g[z]) == -big);
     }
@@ -92,6 +93,27 @@ void init()                                                       // Initialises
       do{ q_f[j] = normal(0,sqrt(vara_ff));}while(priorind(prior_q_f,q_f[j]) == -big);
       if(mod == SIR){ do{ q_r[j] = normal(0,sqrt(vara_rr));}while(priorind(prior_q_r,q_r[j]) == -big);}
     }
+		
+		
+		for(j = 0; j < N; j++){   // If initial breeding values are known uses these to initialise the chain (to reduce burnin time)
+			if(q_g_bv.size() == N){
+				double st = q_g[j];
+				q_g[j] = q_g_bv[j]; 
+				if(priorind(prior_q_g,q_g[j]) == -big) q_g[j] = st;
+			}
+			
+			if(q_f_bv.size() == N){
+				double st = q_f[j];
+				q_f[j] = q_f_bv[j]; 
+				if(priorind(prior_q_f,q_f[j]) == -big) q_f[j] = st;
+			}
+			
+			if(q_r_bv.size() == N){
+				double st = q_r[j];
+				q_r[j] = q_r_bv[j]; 
+				if(priorind(prior_q_r,q_r[j]) == -big) q_r[j] = st;
+			}
+		}
   }
   else{
     for(j = 0; j < N; j++){ q_g[j] = 0; q_f[j] = 0; if(mod == SIR) q_r[j] = 0;}
@@ -294,8 +316,11 @@ void init()                                                       // Initialises
 
   if(noout == 0) traceinit();
   
-  q_g_av.clear(); q_f_av.clear(); if(mod == SIR) q_r_av.clear();
-  nqav = 0; for(i = 0; i < N; i++){ q_g_av.push_back(0); q_f_av.push_back(0); if(mod == SIR) q_r_av.push_back(0);}
+  q_g_sum.clear(); q_f_sum.clear(); if(mod == SIR) q_r_sum.clear();
+  nqsum = 0; 
+	for(i = 0; i < N; i++){ 
+		q_g_sum.push_back(0); q_f_sum.push_back(0); if(mod == SIR) q_r_sum.push_back(0);
+	}
 }
 
 void init2()                                                       // Initialises quantities for perfoming event changes

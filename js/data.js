@@ -24,9 +24,9 @@ function databuts()                                                             
 			tableyfrac = tableheightdata/ytot;
 			if(tableyfrac < 1) addbutton("",menux+tab+20+tablewidthdata+10,y,13,tableheightdata-22,SLIDEAC,YSLIDEBUT,-1,-1);
 		 
-			x = menux+tab; y = height-50; dx = 180;
+			x = menux+tab; y = height-70; dx = 180;
 			
-			if(randon == 1) y -= 20;
+			y -= 20;
 			
 			addop("Contact Group","trial",1); x += dx;
 			addop("SNP","snp",2); x += dx;
@@ -42,14 +42,17 @@ function databuts()                                                             
 			//te = "Entry Times"; addbutton(te,x+20,y,textwidth(te,addfont)+22,20,ADDDATAAC,ADDBUT2,OBSFILE,"entry"); x += dx;
 			//te = "Leave Times"; addbutton(te,x+20,y,textwidth(te,addfont)+22,20,ADDDATAAC,ADDBUT2,OBSFILE,"leave"); x += dx;
 			
-			if(randon  == 1){
-				x = menux+tab; y += 20;
-				te = "Rel. Matrix"; addbutton(te,x+20,y,textwidth(te,addfont)+22,20,ADDDATAAC,ADDBUT2,OBSFILE,"rel"); x += dx;
-				//te = "Inv. Rel. Matrix"; addbutton(te,x+20,y,textwidth(te,addfont)+22,20,ADDDATAAC,ADDBUT2,OBSFILE,"invrel"); x += dx;
-				te = "Inv. Rel. List"; addbutton(te,x+20,y,textwidth(te,addfont)+22,20,ADDDATAAC,ADDBUT2,OBSFILE,"invrellist"); x += dx;
-				te = "Pedigree"; addbutton(te,x+20,y,textwidth(te,addfont)+22,20,ADDDATAAC,ADDBUT2,OBSFILE,"ped"); x += dx;
-				te = "Breed. Val."; addbutton(te,x+20,y,textwidth(te,addfont)+22,20,ADDDATAAC,ADDBUT2,OBSFILE,"breval"); x += dx;			
-			}
+			
+			x = menux+tab; y += 20;
+			addop("Rel. Matrix","rel",36); x += dx;
+			//te = "Rel. Matrix"; addbutton(te,x+20,y,textwidth(te,addfont)+22,20,ADDDATAAC,ADDBUT2,OBSFILE,"rel"); x += dx;
+			addop("Inv. Rel. Matrix","invrel",37); x += dx;	
+			addop("Inv. Rel. List","invrellist",38); x += dx;
+			addop("Pedigree","ped",39); x += dx;
+			
+			x = menux+tab; y += 20;
+			addop("Breed. Val.","breval",40); x += dx;
+			addop("Pred. Acc.","predac",41); x += dx;
 			break;
 		
 		case 1:
@@ -82,6 +85,7 @@ function databuts()                                                             
 				case "invrel": addbutton("Add inverse relationship matrix",x,y,0,0,-1,TITLEBUT,-1,-1); break;
 				case "invrellist": addbutton("Add nonzero elements of inverse relationship matrix",x,y,0,0,-1,TITLEBUT,-1,-1); break;
 				case "ped": addbutton("Add Pedigree",x,y,0,0,-1,TITLEBUT,-1,-1); break;
+				case "predac": addbutton("Add prediction accuracy for specified individuals",x,y,0,0,-1,TITLEBUT,-1,-1); break;
 				case "breval": addbutton("Add breeding value data",x,y,0,0,-1,TITLEBUT,-1,-1); break;
 				case "presence": addbutton("Add presence data",x,y,0,0,-1,TITLEBUT,-1,-1); break;
 				}
@@ -104,7 +108,7 @@ function databuts()                                                             
 					
 					case 1:
 						addbutton("Please select the column representing observation times",x+20,y,450,0,-1,PARAGRAPHBUT,-1,-1);
-						addbutton("(or choose a specific time here)",x+425,y,300,20,CHOOSETIMEBUT,CHOOSETIMEBUT,-1,-1);
+						addbutton("(or choose a specific time here)",x+445,y,300,20,CHOOSETIMEBUT,CHOOSETIMEBUT,-1,-1);
 						addbutton("Back",width-205,height-40,90,30,TABBACKAC,BACKBUT,0,-1);
 						addbutton("Cancel",width-105,height-40,90,30,CANCELBUT2,CANCELBUT2,0,-1);
 						break;
@@ -136,12 +140,12 @@ function databuts()                                                             
 							switch(datatype){
 							case "state": case "diagtest":
 								addbutton("Please select the column representing observation times",x+20,y,450,0,-1,PARAGRAPHBUT,-1,-1);
-								addbutton("(or choose a specific time here)",x+425,y,300,20,CHOOSETIMEBUT,CHOOSETIMEBUT,-1,-1);
+								addbutton("(or choose a specific time here)",x+445,y,300,20,CHOOSETIMEBUT,CHOOSETIMEBUT,-1,-1);
 								break;
 								
 							case "infection":
 								addbutton("Please select the column representing infection times",x+20,y,800,0,-1,PARAGRAPHBUT,-1,-1);
-								addbutton("(or choose a specific time here)",x+425,y,300,20,CHOOSETIMEBUT,CHOOSETIMEBUT,-1,-1);
+								addbutton("(or choose a specific time here)",x+445,y,300,20,CHOOSETIMEBUT,CHOOSETIMEBUT,-1,-1);
 								break;
 								
 							case "recovery":
@@ -173,7 +177,11 @@ function databuts()                                                             
 								break;
 							
 							case "breval":
-								addbutton("Please select the column representing the susceptibility breeding value:",x+20,y,800,0,-1,PARAGRAPHBUT,-1,-1);
+								addbutton("Please select trait and columun giving value:",x+20,y,800,0,-1,PARAGRAPHBUT,-1,-1);
+								var xx = x+390, yy = y+2;
+								addbutton("Susceptibility",xx,yy,120,15,RADIOBUT,RADIOBUT,"sus",RADIOBREEDVAL);
+								addbutton("Infectivity",xx+120,yy,120,15,RADIOBUT,RADIOBUT,"inf",RADIOBREEDVAL);
+								addbutton("Recoverability",xx+240,yy,120,15,RADIOBUT,RADIOBUT,"rec",RADIOBREEDVAL);
 								break;
 														
 							case "ped":
@@ -195,11 +203,6 @@ function databuts()                                                             
 							
 							case "ped":
 								addbutton("Please select the column giving second parent:",x+20,y,800,0,-1,PARAGRAPHBUT,-1,-1);
-								break;
-								
-								
-							case "breval":
-								addbutton("Please select the column representing the infectivity breeding value:",x+20,y,800,0,-1,PARAGRAPHBUT,-1,-1);
 								break;
 							}
 							break;
@@ -361,6 +364,11 @@ function loadobsfile2(sep)                                                      
 {
 	var lines = textFromFile.split('\n');
 
+	for(j = 0; j < lines.length; j++){  // Removes \r
+		var len = lines[j].length;
+		if(lines[j].charCodeAt(len-1) == 13) lines[j] = lines[j].substr(0,len-1);
+	}
+	
 	j = 0;
 	
 	if(datatype == "invrellist"){ // read off the top line
@@ -378,7 +386,7 @@ function loadobsfile2(sep)                                                      
 				spli = spl(trr,sep); //trr.split(sep);
 				ncol = spli.length;
 				for(i = 0; i < ncol; i++) colname[i] = spli[i];
-				if(ncol < 2) return 1;
+				if(ncol < 1) return 1;
 				break;
 			}
 		}while(j < lines.length);
@@ -403,7 +411,7 @@ function loadobsfile2(sep)                                                      
 	
 	obsloaded = 1; 
 	setcolumns();
-	
+
 	return 0;
 }
 
@@ -654,7 +662,7 @@ function loadedfile()
 {
 	switch(fitype){
 	case OBSFILE: 
-		res = loadobsfile(); 
+		res = loadobsfile();
 		if(res == 0){
 			datashow = "table";
 			dataselected = data.length;
@@ -724,8 +732,13 @@ function loadedfile()
 				break;
 				
 			case "breval":
-				datatemp = {variety:"breval", name:"", id:[], valg:[], valf:[]};
-				ncoldefmax = 3;
+				datatemp = {variety:"breval", name:"", id:[], type:"sus", val:[]};
+				ncoldefmax = 2;
+				break;
+				
+			case "predac":
+				datatemp = {variety:"predac", name:"", id:[]};
+				ncoldefmax = 1;
 				break;
 				
 			case "rel":
@@ -747,6 +760,8 @@ function loadedfile()
 				ncoldef = 3;
 				ncoldefmax = 3;
 				break;
+				
+			//case 
 			}
 		}
 		break;
@@ -795,11 +810,18 @@ function dataname(val)
 	case "snp": return "SNP"; 
 	case "fixed": return "Covariate FE";
 	case "fixedcat": return "Catergorical FE";
-	case "ped": return "Pedegree"; 
-	case "breval": return "Breeding Values";
+	case "ped": return "Pedigree"; 
+	case "predac": return "Pred. Accuracy"; 
+	case "breval":
+		switch(data[val].type){
+			case "sus": return "Susceptibility";
+			case "inf": return "Infectivity";
+			case "rec": return "Recoverability";
+		}
 	case "rel": return "Rel. Matrix";
 	case "invrel": return "Inv. Rel. Matrix";
 	case "invrellist": return "Inv. Rel. List";
+	default: return "Unspecified";
 	}
 }
 
@@ -882,13 +904,22 @@ function adddata()
 		datatemp.id=[];
 		for(r = 0; r < nrow; r++){
 			datatemp.id[r] = row[r][0];
-			datatemp.valg[r] = row[r][1];
-			datatemp.valf[r] = row[r][2];
+			datatemp.val[r] = row[r][1];
+		}
+		break;
+		
+	case "predac":
+		datatemp.name = "Pred. Accuracy"; 
+		datatemp.id=[];
+		for(r = 0; r < nrow; r++){
+			datatemp.id[r] = row[r][0];
 		}
 		break;
 		
 	case "rel": case "invrel":
-		datatemp.name = "Rel. mat."; 
+		if(datatemp.variety == "rel") datatemp.name = "Rel. Mat."; 
+		else datatemp.name = "Inv. Rel. Mat."; 
+			
 		datatemp.id=[];
 		
 		for(j = 0; j < ncol; j++) datatemp.id[j] = colname[j];
@@ -901,7 +932,7 @@ function adddata()
 		break;
 		
 	case "invrellist":
-		datatemp.name = "Inv. Rel. mat."; 
+		datatemp.name = "Inv. Rel. List"; 
 		datatemp.id=[]; for(j = 0; j < idlist.length; j++) datatemp.id[j] = idlist[j];
 		
 		datatemp.x=[]; datatemp.y=[]; datatemp.val=[];
@@ -932,7 +963,7 @@ function reloaddata(val)                                                        
 	default:
 		nrow = datatemp.id.length;
 		colname[0] = "ID";
-		pr(datatemp.variety);
+	
 		switch(datatemp.variety){
 		case "state":
 			ncol = 3;
@@ -986,11 +1017,22 @@ function reloaddata(val)                                                        
 			}
 			break;
 			
+		case "predac":
+			ncol = 1;
+			for(r = 0; r < nrow; r++){
+				row[r]=[]; row[r][0] = datatemp.id[r];
+			}
+			break;
+			
 		case "breval":
-			ncol = 3;
-			colname[1] = "g"; colname[2] = "f";
+			ncol = 2;
+			switch(datatemp.type){
+				case "sus": colname[1] = "Sus. BV"; break;
+				case "inf": colname[1] = "Inf. BV"; break;
+				case "rec": colname[1] = "Rec. BV"; break;
+			}
 			for(r = 0; r < nrow; r++){ 
-				row[r]=[]; row[r][0] = datatemp.id[r]; row[r][1] = datatemp.valg[r]; row[r][2] = datatemp.valf[r];
+				row[r]=[]; row[r][0] = datatemp.id[r]; row[r][1] = datatemp.val[r];
 			}
 			break;
 			
@@ -1005,6 +1047,7 @@ function reloaddata(val)                                                        
 			for(j = 0; j < ncol; j++) colname[j] = datatemp.id[j];
 			
 			for(r = 0; r < nrow; r++){
+				row[r]=[];
 				for(j = 0; j < ncol; j++) row[r][j] = datatemp.mat[r][j];
 			}
 			break;
@@ -1189,7 +1232,7 @@ function converttoobs(ty)                                                       
 				
 				j = 0; while(j < nindtotal && ind[j].id != id) j++;	
 				if(j == nindtotal){
-					ind[nindtotal] = {id:id, ref:0, cl:[], trial:"", trialnum:0, snp:"", fixed:[], par1:"", par2:"", It:".", Rt:".", entry:"", leave:"", state:[], diagtest:[], g:0, f:0};
+					ind[nindtotal] = {id:id, ref:0, cl:[], trial:"", trialnum:0, snp:"", fixed:[], par1:"", par2:"", It:".", Rt:".", entry:"", leave:"", state:[], diagtest:[], g:0, f:0, r:0};
 					for(cl = 0; cl < ncla; cl++) ind[nindtotal].cl[cl] = {ev:[]};
 					nindtotal++;
 				}
@@ -1259,17 +1302,20 @@ function converttoobs(ty)                                                       
 					
 					if(t != "no" && t != "."){
 						k = 0; kmax = ind[j].cl[cl].ev.length; while(k < kmax && t > ind[j].cl[cl].ev[k].t) k++;
-						if(k < kmax && t == ind[j].cl[cl].ev[k].t){ alertp("Same time error!"); return;}
-						else{	
+						//if(k < kmax && t == ind[j].cl[cl].ev[k].t){ alertp("Same time error!"+t+" "+ind[j].cl[cl].ev[k].t); return;}
+						//else{	
 							newev = {t:t, variety:dat.variety, obsdata:d, obsdatai:i, desc:dataname(d), transi:dat.transi, transf:dat.transf, col:[]};
 							ind[j].cl[cl].ev.splice(k,0,newev);
-						}	
+						//}	
 					}
 					break;
 					
 				case "breval":
-					ind[j].g = dat.valg[i];
-					ind[j].f = dat.valf[i];
+					switch(dat.type){
+						case "sus": ind[j].g = dat.val[i]; break;
+						case "inf": ind[j].f = dat.val[i]; break;
+						case "rec": ind[j].r = dat.val[i]; break;
+					}
 					break;
 					
 				case "entry":
@@ -1400,7 +1446,7 @@ function drawdata()                                                             
 	
 	nob = 0;
 	addob(x,y,OBDATAHEAD); y += 40;
-	for(d = 0; d < data.length; d++){ addob(x,y,OBDATA,d); y += 45;}
+	for(d = 0; d < data.length; d++){ addob(x,y,OBDATA,d); y += 33;}
 	ytot = y;
 	
 	placeob();	

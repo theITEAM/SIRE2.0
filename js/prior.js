@@ -130,9 +130,9 @@ function collectvariables()                                                     
 	}
 	
 	if(isdata("snp") == 1){
-		addvar("Parameter","a_g","This parameter gives the fractional change in susceptibility coming from an A allele compared to a B allele.",-2.3,2.3);
-		addvar("Parameter","a_f","This parameter gives the fractional change in infectivity coming from an A allele compared to a B allele.",-2.3,2.3);
-		if(modtype == SIR) addvar("Parameter","a_r","This parameter gives the fractional change in recoverability coming from an A allele compared to a B allele.",-2.3,2.3);
+		addvar("Parameter","a_g","This parameter gives the fractional change in susceptibility coming from an A allele compared to a B allele.",-3,3);
+		addvar("Parameter","a_f","This parameter gives the fractional change in infectivity coming from an A allele compared to a B allele.",-3,3);
+		if(modtype == SIR) addvar("Parameter","a_r","This parameter gives the fractional change in recoverability coming from an A allele compared to a B allele.",-3,3);
 		if(domon == 1){
 			addvar("Parameter","Δ_g","This parameter gives the scaled dominance factor for the susceptibility SNP effect (1 when A is completely dominant over B).",-1,1);
 			addvar("Parameter","Δ_f","This parameter gives the scaled dominance factor for the infectivity SNP effect (1 when A is completely dominant over B).",-1,1);
@@ -141,34 +141,36 @@ function collectvariables()                                                     
 	}
 	
 	if(geon == 1 && isdata("trial") == 1){
-		addvar("Parameter","G","This parameter gives the fractional difference in transmission rate for the specified group.",-2.3,2.3);
-		addvar("Parameter","Ψ_G","This parameter gives the standard deviation in group effects.",0.01,3);
+		addvar("Parameter","G","This parameter gives the fractional difference in transmission rate for the specified group.",-3,3);
+		addvar("Parameter","σ_G","This parameter gives the standard deviation in group effects.",0.01,3);
 	}
 	
+	if(randon == 1){
+		//if(isdata("ped")+isdata("rel")+isdata("invrel")+isdata("invrellist") == 0){
+			
+		addvar("Parameter","q_g","This parameter gives the additive genetic contribution to the fractional change in susceptibility (that is individual-based variation over and above that coming from the SNP and fixed effects).",-5,5);
+		addvar("Parameter","q_f","This parameter gives the additive genetic contribution to the fractional change in infectivity (that is individual-based variation over and above that coming from the SNP and fixed effects).",-5,5);
+		if(modtype == SIR) addvar("Parameter","q_r","This parameter gives the additive genetic contribution to the fractional change in recoverability (that is individual-based variation over and above that coming from the SNP and fixed effects).",-5,5);
+	
+		addvar("Parameter","Ω_gg","This parameter gives the gg element of the 3x3 covariance matrix for additive genetic contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,3);
+		addvar("Parameter","Ω_ff","This parameter gives the ff element of the 3x3 covariance matrix for additive genetic  contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,3);
+		if(modtype == SIR) addvar("Parameter","Ω_rr","This parameter gives the rr element of the 3x3 covariance matrix for additive genetic  contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,3);
+	
+		addvar("Parameter","Ω_gf","This parameter gives the gf element of the 3x3 covariance matrix for additive genetic contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).","-∞","∞");
+		if(modtype == SIR){
+			addvar("Parameter","Ω_gr","This parameter gives the gr element of the 3x3 covariance matrix for additive genetic contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).","-∞","∞");
+			addvar("Parameter","Ω_fr","This parameter gives the fr element of the 3x3 covariance matrix for additive genetic contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).","-∞","∞");
+		}		
+	}
+		
 	if(envon == 1){
-		if(isdata("ped")+isdata("rel")+isdata("invrel")+isdata("invrellist") > 0){
-			addvar("Parameter","q_g","This parameter gives the additive genetic contribution to the fractional change in susceptibility (that is individual-based variation over and above that coming from the SNP and fixed effects).",-3.45,3.45);
-			addvar("Parameter","q_f","This parameter gives the additive genetic contribution to the fractional change in infectivity (that is individual-based variation over and above that coming from the SNP and fixed effects).",-3.45,3.45);
-			if(modtype == SIR) addvar("Parameter","q_r","This parameter gives the additive genetic contribution to the fractional change in recoverability (that is individual-based variation over and above that coming from the SNP and fixed effects).",-3.45,3.45);
+		addvar("Parameter","ε_g","This parameter gives the residual contribution to the fractional change in susceptibility (that is individual-based variation over and above that coming from the SNP and fixed effects).",-5,5);
+		addvar("Parameter","ε_f","This parameter gives the residual contribution to the fractional change in infectivity (that is individual-based variation over and above that coming from the SNP and fixed effects).",-5,5);
+		if(modtype == SIR) addvar("Parameter","ε_r","This parameter gives the residual contribution to the fractional change in recoverability (that is individual-based variation over and above that coming from the SNP and fixed effects).",-5,5);
 		
-			addvar("Parameter","Ω_gg","This parameter gives the gg element of the 3x3 covariance matrix for additive genetic contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,4);
-			addvar("Parameter","Ω_ff","This parameter gives the ff element of the 3x3 covariance matrix for additive genetic  contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,4);
-			if(modtype == SIR) addvar("Parameter","Ω_rr","This parameter gives the rr element of the 3x3 covariance matrix for additive genetic  contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,4);
-		
-			addvar("Parameter","Ω_gf","This parameter gives the gf element of the 3x3 covariance matrix for additive genetic contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).","-∞","∞");
-			if(modtype == SIR){
-				addvar("Parameter","Ω_gr","This parameter gives the gr element of the 3x3 covariance matrix for additive genetic contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).","-∞","∞");
-				addvar("Parameter","Ω_fr","This parameter gives the fr element of the 3x3 covariance matrix for additive genetic contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).","-∞","∞");
-			}		
-		}
-		
-		addvar("Parameter","ε_g","This parameter gives the residual contribution to the fractional change in susceptibility (that is individual-based variation over and above that coming from the SNP and fixed effects).",-3.45,3.45);
-		addvar("Parameter","ε_f","This parameter gives the residual contribution to the fractional change in infectivity (that is individual-based variation over and above that coming from the SNP and fixed effects).",-3.45,3.45);
-		if(modtype == SIR) addvar("Parameter","ε_r","This parameter gives the residual contribution to the fractional change in recoverability (that is individual-based variation over and above that coming from the SNP and fixed effects).",-3.45,3.45);
-		
-		addvar("Parameter","Ψ_gg","This parameter gives the gg element of the 3x3 covariance matrix for residual contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,4);
-		addvar("Parameter","Ψ_ff","This parameter gives the ff element of the 3x3 covariance matrix for residual contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,4);
-		if(modtype == SIR) addvar("Parameter","Ψ_rr","This parameter gives the rr element of the 3x3 covariance matrix for residual contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,4);
+		addvar("Parameter","Ψ_gg","This parameter gives the gg element of the 3x3 covariance matrix for residual contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,3);
+		addvar("Parameter","Ψ_ff","This parameter gives the ff element of the 3x3 covariance matrix for residual contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,3);
+		if(modtype == SIR) addvar("Parameter","Ψ_rr","This parameter gives the rr element of the 3x3 covariance matrix for residual contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).",0.01,3);
 		
 		addvar("Parameter","Ψ_gf","This parameter gives the gf element of the 3x3 covariance matrix for residual contributions. This accounts for potential correlations between traits (e.g. more susceptible individuals may also be more infectious).","-∞","∞");
 		if(modtype == SIR){
@@ -189,7 +191,7 @@ function collectvariables()                                                     
 					if(data[d].val[i] > max) max = data[d].val[i];
 				}
 				var dif = (max-min); if(dif == 0) dif = 1;
-				var bo = (2.3/dif).toPrecision(3)
+				var bo = (3/dif).toPrecision(3)
 				addvar("Parameter","b_g,"+repspace(data[d].name),"This parameter gives the slope between the fractional change in suscepbility and "+data[d].name+".",-bo,bo,col);
 				addvar("Parameter","b_f,"+repspace(data[d].name),"This parameter gives the slope between the fractional change in infectivity and "+data[d].name+".",-bo,bo,col);
 				if(modtype == SIR) addvar("Parameter","b_r,"+data[d].name,"This parameter gives the slope between the fractional change in recoverability and "+repspace(data[d].name)+".",-bo,bo,col);
@@ -199,9 +201,9 @@ function collectvariables()                                                     
 			case "fixedcat":
 				for(j = 0; j < data[d].posval.length; j++){
 					if(data[d].posval[j] != data[d].ref){
-						addvar("Parameter","b_g,"+repspace(data[d].posval[j]),"This parameter gives the fractional change in suscepbility for "+data[d].name+"="+data[d].posval[j]+" compared to "+data[d].name+"="+data[d].ref+".",-2.3,2.3,col);
-						addvar("Parameter","b_f,"+repspace(data[d].posval[j]),"This parameter gives the fractional change in infectivity for "+data[d].name+"="+data[d].posval[j]+" compared to "+data[d].ref+".",-2.3,2.3,col);
-						if(modtype == SIR) addvar("Parameter","b_r,"+repspace(data[d].posval[j]),"This parameter gives the fractional change in recoverability for "+data[d].name+"="+data[d].posval[j]+" compared to "+data[d].ref+".",-2.3,2.3,col);
+						addvar("Parameter","b_g,"+repspace(data[d].posval[j]),"This parameter gives the fractional change in suscepbility for "+data[d].name+"="+data[d].posval[j]+" compared to "+data[d].name+"="+data[d].ref+".",-3,3,col);
+						addvar("Parameter","b_f,"+repspace(data[d].posval[j]),"This parameter gives the fractional change in infectivity for "+data[d].name+"="+data[d].posval[j]+" compared to "+data[d].ref+".",-3,3,col);
+						if(modtype == SIR) addvar("Parameter","b_r,"+repspace(data[d].posval[j]),"This parameter gives the fractional change in recoverability for "+data[d].name+"="+data[d].posval[j]+" compared to "+data[d].ref+".",-3,3,col);
 						col++;
 					}
 				}

@@ -44,10 +44,12 @@ function drawexample()                                                          
 	
 	xx = x + Math.floor(exampwidth*0.45);
 	xxx = Math.floor(exampwidth*0.25)-180;
-	
-	addob(xx,y,OBEXAMP,"EX: Additive genetics example (known inf. + rec.).","AddGen"); y += 25;
 		
+	//addob(xx,y,OBEXAMP,"EX 11: Known infection and recovery times","Example 11"); y += 25;
+
+	
 	yst = y;
+	addob(xx,y,OBEXAMPTITLE,"WITHOUT POLYGENIC CONTRIBUTION",""); y += 25;
 	addob(xx,y,OBEXAMP,"EX 1: Known infection and recovery times","Example 1"); y += 25;
 	addob(xx,y,OBEXAMP,"EX 2: Staggered contact group timings","Example 2"); y += 25;
 	addob(xx,y,OBEXAMP,"EX 3: Known recovery times","Example 3"); y += 25;
@@ -58,6 +60,10 @@ function drawexample()                                                          
 	addob(xx,y,OBEXAMP,"EX 8: Two diagnostic tests sensitive to I and I+R","Example 8"); y += 25;
 	addob(xx,y,OBEXAMP,"EX 9: Time censoring end of epidemics","Example 9"); y += 25;
 	addob(xx,y,OBEXAMP,"EX 10: Time censoring beginning of epidemics","Example 10"); y += 25;
+	addob(xx,y,OBEXAMPTITLE,"WITH POLYGENIC CONTRIBUTION",""); y += 25;
+	addob(xx,y,OBEXAMP,"EX 11: Known infection and recovery times","Example 11"); y += 25;
+	addob(xx,y,OBEXAMP,"EX 12: Periodic disease status checks with perfect test","Example 12"); y += 25;
+	addob(xx,y,OBEXAMP,"EX 13: Two diagnostic tests sensitive to I and I+R","Example 13"); y += 25;
 	
 	addob(xx-20,yst,OBBRACKET,y-yst);
 	addob(xxx,Math.floor((y+yst)/2 - 22),OBEXAMPPIC,0,"SIR model",20);
@@ -65,13 +71,20 @@ function drawexample()                                                          
 	y += 20;
 	
 	yst = y;
-	addob(xx,y,OBEXAMP,"EX 11: Known infection times","Example 11"); y += 25;
-	addob(xx,y,OBEXAMP,"EX 12: Staggered contact group timings","Example 12"); y += 25;
-	addob(xx,y,OBEXAMP,"EX 13: Periodic disease status checks with perfect test","Example 13"); y += 25;
-	addob(xx,y,OBEXAMP,"EX 14: Imperfect disease diagnostic test results","Example 14"); y += 25;
-	addob(xx,y,OBEXAMP,"EX 15: Time censoring end of epidemics","Example 15"); y += 25;
-	addob(xx,y,OBEXAMP,"EX 16: Time censoring beginning of epidemics","Example 16"); y += 25;
+	addob(xx,y,OBEXAMPTITLE,"WITHOUT POLYGENIC CONTRIBUTION",""); y += 25;
+		addob(xx,y,OBEXAMP,"EX 14: Known infection times","Example 14"); y += 25;
+	addob(xx,y,OBEXAMP,"EX 15: Staggered contact group timings","Example 15"); y += 25;
+	addob(xx,y,OBEXAMP,"EX 16: Periodic disease status checks with perfect test","Example 16"); y += 25;
+	addob(xx,y,OBEXAMP,"EX 17: Imperfect disease diagnostic test results","Example 17"); y += 25;
+	addob(xx,y,OBEXAMP,"EX 18: Time censoring end of epidemics","Example 18"); y += 25;
+	addob(xx,y,OBEXAMP,"EX 19: Time censoring beginning of epidemics","Example 19"); y += 25;
+	addob(xx,y,OBEXAMPTITLE,"WITH POLYGENIC CONTRIBUTION",""); y += 25;
 	
+	addob(xx,y,OBEXAMP,"EX 20: Known infection times","Example 20"); y += 25;
+	addob(xx,y,OBEXAMP,"EX 21: Periodic disease status checks with perfect test","Example 21"); y += 25;
+	addob(xx,y,OBEXAMP,"EX 22: Diagnostic test measurements","Example 22"); y += 25;
+
+
 	addob(xx-20,yst,OBBRACKET,y-yst);
 	addob(xxx,Math.floor((y+yst)/2 - 22),OBEXAMPPIC,1,"SI model",21);
 	

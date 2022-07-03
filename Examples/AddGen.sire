@@ -34,7 +34,8 @@ heightst:598
 datanote:"This example looks at additive genetic contributions to the susceptibility, infectivity and recoverability.\n\nIt assumes that the infection and recovery times for all individuals are known (DS 1). \n\nData was generated using a modified Doob-Gillespie algorithm for N_group=200 contact groups each containing G_size=10 individuals simulated until time t=100 (example dataset 14 for times and dataset 15 for the inverse of the relationship matrix).\n\nThe following parameters were used: β=0.05, γ=0.1, k=3, Ω_gg=0.33, Ω_gf=0.3, Ω_gr=-0.044, Ω_ff=1.68, Ω_fr=-0.5, Ω_rr=0.6, Ψ_gg=0.77, Ψ_gf=0.56, Ψ_gr=-0.25, Ψ_ff=1.12, Ψ_fr=-0.4, Ψ_rr=0.9, and σ_G=0.25.\n\n"
 modtype:0
 envon:1
-geon:0
+randon:1
+geon:1
 domon:1
 order:0
 fixeddata:[]

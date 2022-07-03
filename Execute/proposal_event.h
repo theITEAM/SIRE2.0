@@ -53,6 +53,7 @@ void propevent()                                                   // Proposes e
         }
       }
 
+
       if(unknownIfl == 1){
         time_addreminf -= clock();
         for(k = 0; k < trialunknownI[z].size(); k++){  // Adds and removes infection in individuals
@@ -63,6 +64,7 @@ void propevent()                                                   // Proposes e
         }
         time_addreminf += clock();
       }
+			
     }
 
     ntrialev[z] = nev; trialevind[z] = evind; trialevt[z] = evt; trialevty[z] = evty;

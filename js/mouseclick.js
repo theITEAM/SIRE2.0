@@ -101,6 +101,7 @@ function finalaction(i)                                                         
 		case RADIOORDER: order = val; indplotst=[]; orderind(); break;
 		case RADIOENABLE: if(text == "Yes") data[val].enable = 1; else data[val].enable = 0; collectvariables(); break;
 		case RADIORAND: randon = val; break;
+		case RADIOBREEDVAL: datatemp.type = val; break;
 		}
 		break;
 		

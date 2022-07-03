@@ -64,14 +64,15 @@ function buttoninit()                                                          /
 	
 	lastbut = nbut;
 
+	x = saveoptions(width-125);
 	if(page == HOMEPAGE){
-		x = saveoptions(width-125);
+		
 		addbutton("Load",x,0,75,22,LOADBUT,LOADBUT,-1,0); 
 		addbutton("[?]",width-45,0,15,20,HELPICONBUT,HELPICONBUT,30,-1);
 	}
 	
 	if(page == RUNPAGE && pagesub[page] > 0){
-		x = saveoptions(width-125);
+		//x = saveoptions(width-125);
 		x = exportoptions(x);
 		addbutton("[?]",width-45,0,15,20,HELPICONBUT,HELPICONBUT,31,-1);
 	}
@@ -849,7 +850,7 @@ function gettabcol(val,dy)                                                      
 			case "presence": case "infection": case "recovery": if(val == 0) ty = "ID"; else ty = "TIME"; break;
 			case "entry": case "leave": if(val == 0) ty = "ID"; else ty = "TIME"; break;
 			case "snp": case "trial": case "fixed": case "fixedcat": if(val == 0) ty = "ID"; else ty = "VAL"; break;
-			case "rel": case "invrel": case "invrellist": ty="ID"; break;
+			case "rel": case "invrel": case "invrellist": case "predac": ty="ID"; break;
 			case "breval": ty = "ID"; break;
 		}
 

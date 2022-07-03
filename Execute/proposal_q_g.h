@@ -67,40 +67,42 @@ void propq_g()                                             // Makes proposals to
   time_q_ginit += clock();
 
   for(loop = 0; loop < 3; loop++){
-    for(j = 0; j < N; j++){
-      q_old = q_g[j];
-      q_new = q_old + normal(0,jumpq_g);
+		if(true){ // qq
+			for(j = 0; j < N; j++){
+				q_old = q_g[j];
+				q_new = q_old + normal(0,jumpq_g);
 
-      dJ = (exp(q_new)-exp(q_old))*sumj[j];
-      dL = -beta*dJ;
-      dPri = priorind(prior_q_g,q_new)-priorind(prior_q_g,q_old);
+				dJ = (exp(q_new)-exp(q_old))*sumj[j];
+				dL = -beta*dJ;
+				dPri = priorind(prior_q_g,q_new)-priorind(prior_q_g,q_old);
 
-      if(infstat[j] == 0) dL += q_new - q_old;
+				if(infstat[j] == 0) dL += q_new - q_old;
 
-      fac = Ainvdiag[j];
-      sum_g = 0; sum_f = fac*q_f[j]; if(mod == SIR) sum_r = fac*q_r[j];
-      for(i = 0; i < nAinvlist[j]; i++){ jj = Ainvlist[j][i]; fac2 = Ainvlistval[j][i]; sum_g += fac2*q_g[jj]; sum_f += fac2*q_f[jj]; if(mod == SIR) sum_r += fac2*q_r[jj]; }
+				fac = Ainvdiag[j];
+				sum_g = 0; sum_f = fac*q_f[j]; if(mod == SIR) sum_r = fac*q_r[j];
+				for(i = 0; i < nAinvlist[j]; i++){ jj = Ainvlist[j][i]; fac2 = Ainvlistval[j][i]; sum_g += fac2*q_g[jj]; sum_f += fac2*q_f[jj]; if(mod == SIR) sum_r += fac2*q_r[jj]; }
 
-      if(mod == SIR) dLq = -((q_new*q_new - q_old*q_old)*fac*Pgg + 2*(q_new-q_old)*(sum_g*Pgg + sum_f*Pgf + sum_r*Pgr))/2;
-      else dLq = -((q_new*q_new - q_old*q_old)*fac*Pgg + 2*(q_new-q_old)*(sum_g*Pgg + sum_f*Pgf))/2;
+				if(mod == SIR) dLq = -((q_new*q_new - q_old*q_old)*fac*Pgg + 2*(q_new-q_old)*(sum_g*Pgg + sum_f*Pgf + sum_r*Pgr))/2;
+				else dLq = -((q_new*q_new - q_old*q_old)*fac*Pgg + 2*(q_new-q_old)*(sum_g*Pgg + sum_f*Pgf))/2;
 
-      al = exp(dL+dLq+dPri);
+				al = exp(dL+dLq+dPri);
 
-      ntr_q_g++;
-      if(ran() < al){
-        nac_q_g++;
+				ntr_q_g++;
+				if(ran() < al){
+					nac_q_g++;
 
-        q_g[j] = q_new;
-        Li += dL; J_mc += dJ; Pri += dPri;
-        Liq += dLq;
+					q_g[j] = q_new;
+					Li += dL; J_mc += dJ; Pri += dPri;
+					Liq += dLq;
 
-        if(burning == 1) jumpq_g *= upfac;
-      }
-      else{
-        if(burning == 1) jumpq_g *= downfac;
-      }
-    }
-
+					if(burning == 1) jumpq_g *= upfac;
+				}
+				else{
+					if(burning == 1) jumpq_g *= downfac;
+				}
+			}
+		}
+		
     propvara();
   }
   time_q_g += clock();

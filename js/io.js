@@ -51,6 +51,7 @@ function save(withres)                                                          
 	st += "heightst:"+JSON.stringify(height)+"\n";
 	st += "datanote:"+JSON.stringify(datanote)+"\n";
 	st += "modtype:"+JSON.stringify(modtype)+"\n";
+	st += "randon:"+JSON.stringify(randon)+"\n";
  	st += "envon:"+JSON.stringify(envon)+"\n";
 	st += "geon:"+JSON.stringify(geon)+"\n";
 	st += "domon:"+JSON.stringify(domon)+"\n";
@@ -77,6 +78,8 @@ function load()                                                                 
 {		
 	var lines = textFromFile.split('\n');
 	var n = 0, j, st;
+	
+	randon = 0;
 	
 	dataerror = "";
 	infres={}; varval=[];
@@ -126,6 +129,7 @@ function load()                                                                 
 				case "heightst": heightold = JSON.parse(st); break;
 				case "datanote": datanote = JSON.parse(st); break;
 				case "modtype": modtype = JSON.parse(st); break;
+				case "randon": randon = JSON.parse(st); break;
 				case "envon": envon = JSON.parse(st); break;
 				case "geon": geon = JSON.parse(st); break;
 				case "domon": domon = JSON.parse(st); break;

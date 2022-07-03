@@ -153,6 +153,7 @@ void readfile(string file)                                                     /
       s2 = get(child,"sens");
       if(s2 == "I") diagtest_sens.push_back(1);
       else diagtest_sens.push_back(2);
+			
       ndiagtest++;
     }
   }
@@ -190,7 +191,7 @@ void readfile(string file)                                                     /
   }
 
   if(ndiagtest > 0){ ninddtest.resize(ndiagtest); inddtest.resize(ndiagtest); inddtestt.resize(ndiagtest); tlist.resize(ndiagtest); reslist.resize(ndiagtest);}
-
+	
   for(child = root->FirstChild(); child; child = child->NextSibling()){
     s1 = child->Value();
     if(s1.compare("datatable") == 0){  // model
@@ -209,9 +210,19 @@ void readfile(string file)                                                     /
       if(exi(child,"It") == true){
         Itcol = long(getnum(child,"It"))-1;
       }
+			
+			if(exi(child,"It_init") == true){
+        Itcol = long(getnum(child,"It_init"))-1;
+				Itinitflag = 1;
+      }
 
       if(exi(child,"Rt") == true){
         Rtcol = long(getnum(child,"Rt"))-1;
+      }
+			
+			if(exi(child,"Rt_init") == true){
+        Rtcol = long(getnum(child,"Rt_init"))-1;
+				Rtinitflag = 1;
       }
 
       if(exi(child,"entt") == true){
@@ -288,51 +299,55 @@ void readfile(string file)                                                     /
 
 						if(z < 0){  Itmi = big; Itma = big; Rtmi = big;}
             else{ Itmi = trialtmin[z]; Itma = trialtmax[z]; Rtmi = trialtmin[z];}
-            
+          
 						Ipos = unknownI; noIinrange = 0; Rtma = big; noRinrange = 0; noRinrange = 0;
 
             if(statecol >= 0){
-              stringstream ss3(sti[statecol] );
-              vector <string> sti2;
-              while(getline(ss3, li3, ']')) {
-                i = 0; while(i < li3.length() && li3.substr(i,1) != "[") i++;
-                if(i == li3.length()) emsg("Error reading data");
-                li3 = li3.substr(i+1);
+							if(z >= 0 && sti[statecol] != "."){
+								stringstream ss3(sti[statecol] );
+								vector <string> sti2;
+								while(getline(ss3, li3, ']')) {
+									i = 0; while(i < li3.length() && li3.substr(i,1) != "[") i++;
+									if(i == li3.length()) emsg("Error reading data");
+									li3 = li3.substr(i+1);
 
-                i = 0; while(i < li3.length() && li3.substr(i,1) != ",") i++;
-                tt = atof(li3.substr(i+1).c_str());
+									i = 0; while(i < li3.length() && li3.substr(i,1) != ",") i++;
+									tt = atof(li3.substr(i+1).c_str());
 
-                if(li3.substr(0,i) == "S"){
-                  if(Itmi < tt) Itmi = tt;
-                  if(Rtmi < tt) Rtmi = tt;
-                }
-                if(li3.substr(0,i) == "I"){
-                  if(Itma > tt) Itma = tt;
-                  if(Rtmi < tt) Rtmi = tt;
-                  Ipos = defI;
-                }
-                if(li3.substr(0,i) == "R"){
-                  if(Itma > tt) Itma = tt;
-                  if(Rtma > tt) Rtma = tt;
-                  Ipos = defI;
-                }
-              }
+									if(li3.substr(0,i) == "S"){
+										if(Itmi < tt) Itmi = tt;
+										if(Rtmi < tt) Rtmi = tt;
+									}
+									if(li3.substr(0,i) == "I"){
+										if(Itma > tt) Itma = tt;
+										if(Rtmi < tt) Rtmi = tt;
+										Ipos = defI;
+									}
+									if(li3.substr(0,i) == "R"){
+										if(Itma > tt) Itma = tt;
+										if(Rtma > tt) Rtma = tt;
+										Ipos = defI;
+									}
+								}
+							}
             }
-
+						
             for(diat = 0; diat < ndiagtest; diat++){
               tlist[diat].clear(); reslist[diat].clear();
 
-              stringstream ss3(sti[diagtestcols[diat]] );
-              vector <string> sti2;
-              while(getline(ss3, li3, ']')) {
-                i = 0; while(i < li3.length() && li3.substr(i,1) != "[") i++;
-                if(i == li3.length()) emsg("Error reading data");
-                li3 = li3.substr(i+1);
+							if(z >= 0 && sti[diagtestcols[diat]] != "."){
+								stringstream ss3(sti[diagtestcols[diat]] );
+								vector <string> sti2;
+								while(getline(ss3, li3, ']')) {
+									i = 0; while(i < li3.length() && li3.substr(i,1) != "[") i++;
+									if(i == li3.length()) emsg("Error reading data");
+									li3 = li3.substr(i+1);
 
-                i = 0; while(i < li3.length() && li3.substr(i,1) != ",") i++;
-                tlist[diat].push_back(atof(li3.substr(i+1).c_str()));
-                reslist[diat].push_back(atoi(li3.substr(0,i).c_str()));
-              }
+									i = 0; while(i < li3.length() && li3.substr(i,1) != ",") i++;
+									tlist[diat].push_back(atof(li3.substr(i+1).c_str()));
+									reslist[diat].push_back(atoi(li3.substr(0,i).c_str()));
+								}
+							}
             }
 
             if(Itcol >= 0){
@@ -370,7 +385,7 @@ void readfile(string file)                                                     /
                   noRinrange = 1;
                   if(Ipos == defI){ if(obstmax[z] > Rtmi) Rtmi = obstmax[z];}
                   else noRinrange = 1;
-                }
+                }//zz
                 else{
                   Rti = atof(sti[Rtcol].c_str()); if(isnan(Rti)) emsg("Recovery time not recognised");
                   if(Rti < trialtmin[z] || Rti > trialtmax[z]){
@@ -383,6 +398,8 @@ void readfile(string file)                                                     /
                 }
               }
             }
+
+
 
             for(fi = 0; fi < nfi; fi++) Xt[fi] = atof(sti[Xcols[fi]].c_str());
 
@@ -405,9 +422,10 @@ void readfile(string file)                                                     /
 							if(Itmi == trialtmax[z]){ Itmi = -big; Itma = -big; Rtmi = -big; Rtma = -big; Ipos = defnotI;}  // no infection
 						}
 	    
-						//cout << sti[0] << " " << Itmi << " " << Itma << " h\n";
 						if(Itmi > Itma) emsg("Cannot get a consistent state1");
             if(Rtmi > Rtma) emsg("Cannot get a consistent state2");
+
+						//cout << indid[indid.size()-1] << " " << Itmi << " "  << Itma << " " << Rtmi << " " << Rtma << "jj\n";
 
             Itmin.push_back(Itmi); Itmax.push_back(Itma); Iposst.push_back(Ipos); noIinrangest.push_back(noIinrange);
             Rtmin.push_back(Rtmi); Rtmax.push_back(Rtma); noRinrangest.push_back(noRinrange);
@@ -416,6 +434,7 @@ void readfile(string file)                                                     /
       }
     }
   }
+	//emsg("do");
 
   if(indtrial.size() != N) emsg("The number of individuals in the data do not match the model");
   
@@ -464,14 +483,106 @@ void readfile(string file)                                                     /
             ss >> A[j][jj];
           }
         }
-        cout << "z|Inverting relationship matrix...\n";
+        //cout << "z|Inverting relationship matrix...\n";
         invertmatrix();
-
+			
         for(j = 0; j < N; j++){ 
           for(jj = 0; jj < N; jj++){
             if(jj == j) Ainvdiag[j] = Ainv[j][j];
-            if(jj != j && Ainv[j][jj] != 0){ Ainvlist[j].push_back(jj); Ainvlistval[j].push_back(Ainv[j][jj]); nAinvlist[j]++;}
-            if(jj != j && Ainv[j][jj] != 0 && jj < j){ Ainvlist2[j].push_back(jj); Ainvlistval2[j].push_back(Ainv[j][jj]); nAinvlist2[j]++;}
+            if(jj != j && Ainv[j][jj] != 0){
+							Ainvlist[j].push_back(jj); Ainvlistval[j].push_back(Ainv[j][jj]); nAinvlist[j]++;
+						}
+            if(jj != j && Ainv[j][jj] != 0 && jj < j){ 
+							Ainvlist2[j].push_back(jj); Ainvlistval2[j].push_back(Ainv[j][jj]); nAinvlist2[j]++;
+						}
+          }
+        }
+      }
+    }
+		
+		if(s1.compare("pedigree") == 0){  // relationship matrix
+      randon = 1;
+      Ainv.resize(N);
+      for(child2 = child->FirstChild(); child2; child2 = child2->NextSibling()){
+        s2 = child2->Value();
+        stringstream ss (s2);
+				
+				Ainv.resize(N);
+        for(j = 0; j < N; j++){
+          Ainv[j].resize(N);
+          for(jj = 0; jj < N; jj++) Ainv[j][jj] = 0;
+        }
+				
+				while(getline(ss, li)){
+					if(li.length() > 3){
+						stringstream ss2(li);
+						int i, p1, p2;
+						string par1, par2;
+						ss2 >> i >> par1 >> par2;
+						if(par1 == "." && par2 == "."){
+							Ainv[i][i] += 1;
+						}
+						else{
+							if(par1 == "." && par2 != "."){
+								p2 = atoi(par2.c_str()); 
+								
+								double diag = 4.0/3;
+								Ainv[p2][p2] += (-0.5)*(-0.5)*diag;
+								Ainv[i][p2] += (-0.5)*diag;
+								Ainv[p2][i] += (-0.5)*diag;
+								Ainv[2][2] += diag;
+							}
+							else{
+								if(par1 != "." && par2 == "."){
+									p1 = atoi(par1.c_str()); 
+									
+									double diag = 4.0/3;
+									Ainv[p1][p1] += (-0.5)*(-0.5)*diag;
+									Ainv[i][p1] += (-0.5)*diag;
+									Ainv[p1][i] += (-0.5)*diag;
+									Ainv[i][i] += diag;
+								}
+								else{
+									p1 = atoi(par1.c_str()); p2 = atoi(par2.c_str()); 
+									
+									double diag = 2;
+									Ainv[p1][p1] += (-0.5)*(-0.5)*diag;
+									Ainv[p2][p2] += (-0.5)*(-0.5)*diag;
+									Ainv[p1][p2] += (-0.5)*(-0.5)*diag;
+									Ainv[p2][p1] += (-0.5)*(-0.5)*diag;
+									Ainv[i][p1] += (-0.5)*diag;
+									Ainv[p1][i] += (-0.5)*diag;
+									Ainv[i][p2] += (-0.5)*diag;
+									Ainv[p2][i] += (-0.5)*diag;
+									Ainv[i][i] += diag;
+								}
+							}
+						}
+					}
+				}
+			
+				/*
+				{
+					cout << "Out\n";
+					ofstream Ainvout("D:Ainvout.txt");
+					for(j = 0; j < N; j++){ 
+						for(jj = 0; jj < N; jj++){
+							Ainvout << Ainv[j][jj] << "\t";
+						}
+						Ainvout << "\n";
+					}
+				}
+				*/
+					
+        for(j = 0; j < N; j++){ 
+          for(jj = 0; jj < N; jj++){
+            if(jj == j) Ainvdiag[j] = Ainv[j][j];
+            if(jj != j && Ainv[j][jj] != 0){
+							Ainvlist[j].push_back(jj); Ainvlistval[j].push_back(Ainv[j][jj]); nAinvlist[j]++;
+						}
+            if(jj != j && Ainv[j][jj] != 0 && jj < j){ 
+							Ainvlist2[j].push_back(jj); Ainvlistval2[j].push_back(Ainv[j][jj]); nAinvlist2[j]++;
+						}
           }
         }
       }
@@ -548,7 +659,7 @@ void readfile(string file)                                                     /
 				}
 			}
 			
-			cout << "z|Inverting relationship matrix...\n";
+			//cout << "z|Inverting relationship matrix...\n";
 			invertmatrix();
 
 			for(j = 0; j < N; j++){ 
@@ -644,7 +755,7 @@ void readfile(string file)                                                     /
           pr = prior_fixed_r[fi];
         }
 
-        if(pr == -1){ cout << get(child,"parameter") <<" ha\n"; emsg("Prior must have parameter");}
+        if(pr == -1){ cout << get(child,"parameter") <<"\n"; emsg("Prior must have parameter");}
 
         if(exi(child,"type")){
           fl = 0;
@@ -716,9 +827,9 @@ void readfile(string file)                                                     /
     }
   }
 	
-	q_g_av.resize(N); q_f_av.resize(N); q_r_av.resize(N); 
-	for(i = 0; i < N; i++){ q_g_av[i] = 0; q_f_av[i] = 0; q_r_av[i] = 0;}
-	nqav = 0;
+	q_g_sum.resize(N); q_f_sum.resize(N); q_r_sum.resize(N); 
+	for(i = 0; i < N; i++){ q_g_sum[i] = 0; q_f_sum[i] = 0; q_r_sum[i] = 0;}
+	nqsum = 0;
 }
 
 void invertmatrix()                                           // Inverts the relationship matrix
@@ -870,7 +981,7 @@ void initevents()                                         // Generates the initi
       }
       else{
 	It[j] = -big;
-	if(diagtestfl == 1 && epioccur[z] == 1){  // Using diagnostic test estimates when individual first became infected
+	if(diagtestfl == 1 && epioccur[z] == 1 && Itmax[j] != Itmin[j]){  // Using diagnostic test estimates when individual first became infected
 	  for(diat = 0; diat < ndiagtest; diat++){
 	    for(k = 0; k < ninddtest[diat][j]; k++){
 	      if(inddtest[diat][j][k] == 1 && inddtestt[diat][j][k] > Rtmin[j]){
@@ -944,7 +1055,7 @@ void initevents()                                         // Generates the initi
       }
 
       if(S == 0){
-	emsg("No individuals in contact group");
+				emsg("No individuals in contact group");
       }
       
       if(evl.size() > 0) tmi = evl[0].t;
@@ -1033,7 +1144,20 @@ void initevents()                                         // Generates the initi
     }
   }
 
+	for(j = 0; j < N; j++){
+		z = indtrial[j];
+		if(z >= 0){
+			if(Itinitflag == 1){
+				Itmin[j] = 0; Itmax[j] = trialtmax[z];
+			}
+			if(Rtinitflag == 1){
+				Rtmin[j] = 0; Rtmax[j] = big; 
+			}
+		}
+	}
+
   //for(j = 0; j < N; j++) cout  << Itmin[j] << " " << Itmax[j] << " " << Rtmin[j] << " " << Rtmax[j] <<"  "<< Iposst[j] <<   " check\n";
+	//emsg("do");
 }
 
 

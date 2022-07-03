@@ -29,20 +29,20 @@ void check(long num)                                                          //
 
   temp = likelihood();
   d = Li - temp;
-  if(d*d > 0.01) emsg("Likelihood error");
+  if(d*d > 0.1) emsg("Likelihood error");
   Li = temp;
 
   d = J_mc - J;
-  if(d*d > 0.01){ cout << num << "Num\n"; emsg("Likelihood error");}
+  if(d*d > 0.1){ emsg("Likelihood error");}
   J_mc = J;
 
   if(mod == SIR){
     temp = likelihood_rec();
     d = Lrec - temp;
-    if(d*d > 0.001) emsg("Recovery likelihood error");
+    if(d*d > 0.1) emsg("Recovery likelihood error");
     Lrec = temp;
 
-    d = K_mc - K; if(d*d > 0.001) emsg("Recovery likelihood error");
+    d = K_mc - K; if(d*d > 0.1) emsg("Recovery likelihood error");
     K_mc = K;
   }
 
@@ -51,32 +51,32 @@ void check(long num)                                                          //
 
   if(envon == 1){
     temp = likelihoode();
-    d = Lie - temp; if(d*d > 0.01) emsg("Residual likelihood error");
+    d = Lie - temp; if(d*d > 0.1) emsg("Residual likelihood error");
     Lie = temp;
   }
 
   if(randon == 1){
     temp = likelihoodq();
-    d = Liq - temp; if(d*d > 0.001) emsg("Additive genetic likelihood error");
+    d = Liq - temp; if(d*d > 0.1) emsg("Additive genetic likelihood error");
     Liq = temp;
   }
 
   if(geffon == 1){
     temp = likelihoodgeff_g();
-    d = Ligeff_g - temp; if(d*d > 0.001) emsg("Group effect likelihood error");
+    d = Ligeff_g - temp; if(d*d > 0.1) emsg("Group effect likelihood error");
     Ligeff_g = temp;
   }
 
   if(diagtestfl == 1){
     temp = likelihood_dtest();
-    d = Ldtest - temp; if(d*d > 0.001) emsg("Diagnostic test likelihood error");
+    d = Ldtest - temp; //if(d*d > 0.1) emsg("Diagnostic test likelihood error");
     Ldtest = temp;
   }
 
   temp = prior();
   d = Pri - temp;
 
-  if(d*d > 0.001) emsg("Prior error");
+  if(d*d > 0.1) emsg("Prior error");
   Pri = temp;
 
   for(z = 0; z < Z; z++){
@@ -216,7 +216,7 @@ void outputvariables()                                                      // O
   long f, z;
 
   if(snpfl == 1){
-    cout << "snp: " << a_g << ", " << a_f << ", "; if(mod == SIR) cout << a_r << ", ";
+    cout << "snp" << a_g << ", " << a_f << ", "; if(mod == SIR) cout << a_r << ", ";
     if(domon == 1){
       cout << delta_g << ", " << delta_f << ", "; if(mod == SIR) cout << delta_r << ", ";
     }
@@ -229,32 +229,32 @@ void outputvariables()                                                      // O
     cout << "\n";
   }
 
-  cout << "Beta etc: ";
+  cout << "Beta etc";
   cout << beta << ", "; if(mod == SIR) cout << gama << ", " << kshape << ", ";
   cout << "\n";
 
   if(envon == 1){
-    cout << "env var: ";
+    cout << "env var";
     if(mod == SIR) cout << vare_gg << ", " << vare_gf << ", " << vare_gr << ", " << vare_ff << ", " << vare_fr << ", " << vare_rr << ", ";
     else cout << vare_gg << ", " << vare_gf << ", " << vare_ff << ", ";
     cout << "\n";
   }
 
   if(randon == 1){
-    cout << "rand var: ";
+    cout << "rand var";
     if(mod == SIR) cout << vara_gg << ", " << vara_gf << ", " << vara_gr << ", " << vara_ff << ", " << vara_fr << ", " << vara_rr << ", ";
     else cout << vara_gg << ", " << vara_gf << ", " << vara_ff << ", ";
     cout << "\n";
   }
   
   if(geffon == 1 && Z > 1){
-    cout << "group eff: ";
+    cout << "group eff";
     cout << siggeff_g << ", ";
     for(z = 0; z < Z; z++) cout << geff_g[z] << ", ";
     cout << "\n";
   }
 
-  cout << "Like: ";
+  cout << "Like";
   cout << Li << ", ";
   if(mod == SIR) cout << Lrec << ", ";
 

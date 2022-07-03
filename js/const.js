@@ -1,7 +1,9 @@
 /* This file lists all the constant values used within the interface */
 
-var fin = 1, nwon = 1;     // Flags used when code is begin tested
-//var fin = 0, nwon = 1;  
+//var fin = 0, nwon = 1, diafl = 1;     // Flags used when code is begin tested
+var fin = 1, nwon = 0, diafl = 0;  
+
+var load_init_times = 0;   // Set to 1 for testing when 
 
 const spawn = require('child_process').spawn;  // Used to start up threads which run c++ code which performs analysis
 
@@ -39,7 +41,7 @@ var SUBBUT2 = 76, PARAMBUT = 77, BUBBLETEXTBUT3 = 80, WHITERECTBUT = 81, ARROWBU
 var CANUPLOADBUT = 85, LINKBUT = 93, CANSMALLTEXTBUT = 95, CLEARBUT2 = 99;
 var MINMAXBIGBUT = 704, EXAMPMODBUT = 706;
 var EXAMPBUT = 707, PARACANBUT = 709, RELOADBUT = 710, NEXTCANBUT = 711, BACKCANBUT = 712, TEXTSMBUT = 713;
-var SPEECHBUT2 = 714,  RELOADBUT2 = 715,PRHEADCANBUT = 716, PARACANBUT2 = 717;
+var SPEECHBUT2 = 714,  RELOADBUT2 = 715,PRHEADCANBUT = 716, PARACANBUT2 = 717, EXAMPTITLEBUT = 718;
 
 var CONVERTAC = 105, CHNAMEAC = 106, DELROWAC = 107, SEARCHAC = 108;
 var REPLACEAC = 109, DELROWSAC = 110, TESTRESAC = 111, DOSEARCHAC = 112, DOREPLACEAC = 113, DODELROWSAC = 114, SORTAC = 115;
@@ -76,7 +78,7 @@ var OBPARAM = 0, OBTEXT = 1, OBTIME = 2, OBDATA = 4, OBRADIO = 5, OBBRACKET = 7,
 var OBRADIO2 = 10, OBNAME = 11, OBDATAHEAD = 13, OBIND = 14, OBRADIO3 = 16, OBSIMNUM = 17, OBRADIO4 = 18;
 var OBPRIORHEAD = 22, OBPRIOR = 23, OBDERIVEHEAD = 24, OBDERIVE = 25, OBSELIND = 26, OBTIMEP = 27, OBTEXTEDIT = 31;
 var OBMINMAX = 37, OBUPLOAD = 39, OBLINK = 40,  OBEXAMPPIC = 44, OBEXAMP = 45, OBSPEECH = 46, OBTRIALTIME = 47;
-var OBSPEECH2 = 48, OBSETUP = 49, OBSETUP2 = 50, OBSETUP3 = 51,  OBSPEECH3 = 52;
+var OBSPEECH2 = 48, OBSETUP = 49, OBSETUP2 = 50, OBSETUP3 = 51,  OBSPEECH3 = 52, OBEXAMPTITLE = 53;
 
 // Used to order individuals
 var order, IDORD = 0, GROUPORD = 1, TIMEORD = 2;
@@ -86,7 +88,7 @@ var CANRADIORATE = 10, CANRADIOCHECK = 12, CANRADIOTESTRES = 13, CANRADIODEFINE 
 var CANRADIOTERM = 16, CANRADIOXAXIS = 17, CANRADIOYAXIS = 18, CANRADIOCHECK2 = 20;
 var CANRADIOWHICH = 21, CANRADIOPD = 22, CANRADIOMANUAL = 23;
 var RADIOTERM = 0, RADIOVAR = 1, RADIOCHOOSE = 3, RADIOLABEL = 4, RADIOSTYLE = 5, RADIONAMLAB = 6, RADIOMOD = 7, RADIOENV = 8;
-var RADIOGE = 9, RADIOORDER = 10, RADIOENABLE = 11, RADIODOM = 12, RADIORAND = 13;
+var RADIOGE = 9, RADIOORDER = 10, RADIOENABLE = 11, RADIODOM = 12, RADIORAND = 13, RADIOBREEDVAL = 14;
 
 // Fonts used 
 var tableheadfont = "bold 17px arial", tablefont = "17px arial", subfont = "11px arial", classvalfont = "18px arial";
@@ -95,7 +97,7 @@ var HELPFONT = "17px arial", HUGEFONT = "bold 24px Times", RADIOFONT = "16px tim
 var LABELFONT = "25px times", NORMFONT = "17px arial",  TICKFONT = "20px times", TILEFONT = "18px arial"; 
 var BUTFONT = "bold 16px arial", HELPBUTFONT = "bold 20px arial", HELPBUTFONT2 = "bold 17px arial";
 
-var ADDFONT = "17px arial", STATFONT = "16px arial", KEYFONT = "18px times", addfont = "17px arial",  examplefont = "17px arial";
+var ADDFONT = "17px arial", STATFONT = "16px arial", KEYFONT = "18px times", addfont = "17px arial",  examplefont = "17px arial",  exampletitlefont = "bold 13px arial";
 
 // Colours used
 var BLACK = "#000000", GREEN = "#22FF22", RED = "#FF2222", BLUE = "#4444FF", PURPLE = "#FF44FF";
