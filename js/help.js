@@ -201,7 +201,7 @@ function helpbuts()
 		
 	case 39: 
 		title = "Pedigree";
-		text = "Rather than specify a relatiobnship matrix, here we specify who is the parent of whom. FORMAT: Requires a table in .csv or .txt format with three columns giving the ID of individuals and their two parents. If an individual's parent is unknown (or they are no being considered in the analysis) it is entered as '.' (e.g. .";
+		text = "Rather than specify a relationship matrix, here we specify who is the parent of whom. FORMAT: Requires a table in .csv or .txt format with three columns giving the ID of individuals and their two parents. If an individual's parent is unknown (or they are not being considered in the analysis) it is entered as '.'.";
 		break;
 		
 	case 40: 
