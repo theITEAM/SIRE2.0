@@ -12,13 +12,12 @@ SIRE 2.0 uses an efficient Markov chain Monte Carlo (MCMC) algorithm to draw sam
 
 The following files can be downloaded:
 
-* Windows: [SIRE_v2.0_windows.zip](https://github.com/theITEAM/SIRE2.0/releases/download/v2.01/SIRE_v2.0_windows.zip)
+* Windows: Download the file [SIRE_v2.0_windows.zip](https://github.com/theITEAM/SIRE2.0/releases/download/v2.01/SIRE_v2.0_windows.zip) and unzip. SIRE is run by clicking on the “SIRE.exe” icon.
 
-* Linux: [SIRE_v2.0_linux.tar.gz](https://github.com/theITEAM/SIRE2.0/releases/download/v2.01/SIREv2.0.tar.gz)
+* Linux: Download the file [SIRE_v2.0_linux.tar.gz](https://github.com/theITEAM/SIRE2.0/releases/download/v2.01/SIREv2.0.tar.gz). This can then be extracted by using the terminal command “tar -zxvf SIRE_v2.0_linux.tar.gz”. The code is executed using “./SIRE”.
 
-* Mac: [SIRE_v2.0_Mac.zip](https://github.com/theITEAM/SIRE2.0/releases/download/v2.01/SIRE_v2.0_Mac.zip)
+* Mac: Download the file [SIRE_v2.0_Mac.zip](https://github.com/theITEAM/SIRE2.0/releases/download/v2.01/SIRE_v2.0_Mac.zip). SIRE is run by clicking on the “SIRE.app” icon (if the error message “SIRE can’t be opened because it is from an unidentified developer…” appears, right clicking on “SIRE.app” and selecting “Open” will allow the option to run).
 
-Extract the zipped file and run SIRE 2.0 by clicking on "SIRE2.0.exe".
 
 ## Documentation
 
