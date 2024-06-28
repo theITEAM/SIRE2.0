@@ -323,12 +323,13 @@ function saveoptions(x)
 
 function exportoptions(x)                                                                    // Plots options for export
 {
-	var na, pngfl=0, txtfl = 0, parfl = 0, evefl = 0, pt;
+	var na, pngfl=0, txtfl = 0, parfl = 0, evefl = 0, ebvfl = 0, pt;
 	
 	if(page == RUNPAGE && pagesub[page] != 0){ 
 		na = infpagename[pagesub[page]];
 		
 		evefl = 1; parfl = 1; //diafl = 1;
+		if(randon == 1) ebvfl = 1;
 		
 		if(na != "Start" && na != "Export" &&  na != "Individuals" && !(na == "Scatter Plots" && (varselx < 0 || varsely < 0))){
 			if(na != "Statistics") pngfl = 1;
@@ -336,7 +337,7 @@ function exportoptions(x)                                                       
 		}
 	}
 	
-	num = pngfl+txtfl+parfl+evefl+diafl;
+	num = pngfl+txtfl+parfl+evefl+diafl+ebvfl;
 	if(num == 0) return;
 
 	if(exporton == 0) addbutton("Export",x,0,75,22,EXPORTAC,LOADBUT,32,3); 
@@ -372,12 +373,72 @@ function exportoptions(x)                                                       
 			yy += 22;
 		}
 		
+		if(ebvfl == 1){
+			addbutton("EBVs",xx,yy,95,18,EXPORTBREEDVALAC,EXPORTMINIBUT,1,-1);
+			yy += 22;
+		}
+		
 		if(diafl == 1){
 			addbutton("Diagnostics",xx,yy,95,18,EXPORTDIAGNOSTICAC,EXPORTMINIBUT,1,-1);
 			yy += 22;
 		}
 	}
 	return x;
+}
+
+function exportbreedval()                                                         // Exports breading values
+{
+	let id_str = [];
+	
+	for(let ch = 0; ch < infres.nch; ch++){
+		if(!ebv_str[ch]){ alert("The EBVs have not been calculated yet"); return;}
+	}
+	
+	let nch = infres.nch;
+	
+	let cont = [];
+	for(let ch = 0; ch < nch; ch++){
+		cont[ch] = ebv_str[ch].split("|");
+	}
+	
+	let n = cont[0][1];
+	
+	ncol = 1+n*2;
+	nrow = (cont[0].length-2)/ncol;
+	
+	colname=[];
+	colname[0] = "ID";
+	for(let i = 0; i < n; i++){
+		let st;
+		switch(i){
+		case 0: st = "g"; break;
+		case 1: st = "f"; break;
+		case 2: st = "r"; break;
+		}
+		colname[1+2*i] = "Mean "+st;
+		colname[1+2*i+1] = "SD "+st;
+	}
+	
+	row = [];
+	for(let r = 0; r < nrow; r++){
+		row[r] = [];
+		row[r][0] = cont[0][2+r*ncol];
+		
+		for(let i = 0; i < n; i++){
+			let mean = 0, sd = 0;
+			for(let ch = 0; ch < nch; ch++){
+				mean += Number(cont[0][2+r*ncol+1+2*i]);
+				sd += Number(cont[0][2+r*ncol+1+2*i+1]);
+			}
+			
+			row[r][1+2*i] = (mean/nch).toPrecision(6);
+			row[r][1+2*i+1] = (sd/nch).toPrecision(6);
+		}
+	}
+	
+	exporttype = 6;
+	ById("fileToSave").accept=".txt";
+	savesta();
 }
 
 function exportstate()                                                                     // Exports state samples

@@ -82,6 +82,34 @@ void traceinit()                                                       // Initia
   cout.flush();
 }
 
+void breed_value_plot()                                               // Outputs estimates for breeding value
+{
+	if(randon == 1){
+		cout << "y";
+		if(mod == SIR) cout << "|3"; else cout << "|2";
+		
+		for(int i = 0; i < N; i++){
+			cout << "|" << indid[i];
+			double var_g = (q_g_sum2[i]/nqsum) - (q_g_sum[i]/nqsum)*(q_g_sum[i]/nqsum);
+			if(var_g < 0) var_g = 0;
+			cout << "|" << q_g_sum[i]/nqsum << "|" << sqrt(var_g);
+			
+			double var_f = (q_f_sum2[i]/nqsum) - (q_f_sum[i]/nqsum)*(q_f_sum[i]/nqsum);
+			if(var_f < 0) var_f = 0;
+			cout << "|" << q_f_sum[i]/nqsum << "|" << sqrt(var_f);
+			
+			if(mod == SIR){
+				double var_r = (q_r_sum2[i]/nqsum) - (q_r_sum[i]/nqsum)*(q_r_sum[i]/nqsum);
+				if(var_r < 0) var_r = 0;
+				cout << "|" << q_r_sum[i]/nqsum << "|" << sqrt(var_r);
+			}
+		}
+		
+		cout << "\n";
+		cout.flush();
+	}
+}
+
 void traceplot()                                                      // Outputs varaible values
 {
   long f, z;

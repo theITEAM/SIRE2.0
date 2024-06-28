@@ -149,6 +149,11 @@ function finalaction(i)                                                         
 		exportparam();
 		exporton = 0;
 		break;
+	
+	case EXPORTBREEDVALAC:
+		exportbreedval();
+		exporton = 0;
+		break;
 		
 	case EXPORTSTATEAC:
 		exportstate();

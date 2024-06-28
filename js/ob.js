@@ -189,7 +189,9 @@ function placeob()                                                              
 		
 		case OBPRIOR:
 			p = val;	
-			addcanbutton(param[p].name,0,y,0,0,-1,PARAMBUT,-1,-1);
+		
+			addcanbutton(adjust_name(param[p].name),0,y,0,0,-1,PARAMBUT,-1,-1);
+			//addcanbutton(param[p].name,0,y,0,0,-1,PARAMBUT,-1,-1);
 			
 			w = textwidth(param[p].name,tablefont);
 			x = w+5;
@@ -348,6 +350,18 @@ function placeob()                                                              
 			break;
 		}
 	}
+}
+
+function adjust_name(name)
+{
+	if(name == "a_g") name = "s_g";
+	if(name == "a_f") name = "s_f";
+	if(name == "a_r") name = "s_r";
+	if(name == "G") name = "c";
+	if(name == "σ_G") name = "σ_c";
+	if(name.substr(0,1) == "G") name = "c"+name.substr(1);
+		
+	return name;
 }
 
 function addob(x,y,ty,val,val2,val3,val4)                                                                 // Adds an object to a canvas

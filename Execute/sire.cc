@@ -290,12 +290,17 @@ void update()
 		if(burning == 0) store_sample();
 	}
 	
-	if(s > 100){   // Updates average breeding values
+	if(burning == 0){   // Updates average breeding values
 		for(int i = 0; i < N; i++){ 		
-			q_g_sum[i] += q_g[i]; q_f_sum[i] += q_f[i]; 
-			if(mod==SIR) q_r_sum[i] += q_r[i];
+			q_g_sum[i] += q_g[i]; q_g_sum2[i] += q_g[i]*q_g[i]; 
+			q_f_sum[i] += q_f[i]; q_f_sum2[i] += q_f[i]*q_f[i]; 
+			if(mod==SIR){ q_r_sum[i] += q_r[i]; q_r_sum2[i] += q_r[i]*q_r[i];}
 		}
 		nqsum++;
+		
+		if(noout == 0){
+			if(randon == 1 && s%1000 == 0) breed_value_plot();
+		}
 	}
 }
 

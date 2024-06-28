@@ -18,6 +18,9 @@ The following files can be downloaded:
 
 * Mac: Download the file [SIRE_v2.0_Mac.zip](https://github.com/theITEAM/SIRE2.0/releases/download/v2.01/SIRE_v2.0_Mac.zip). SIRE is run by clicking on the “SIRE.app” icon (if the error message “SIRE can’t be opened because it is from an unidentified developer…” appears, right clicking on “SIRE.app” and selecting “Open” will allow the option to run).
 
+## Future developments
+
+Efforts are currently underway to incorporate the Bayesian methodology presented in this paper into a more widely applicable software tool called  [BICI](https://github.com/theITEAM/BICI) (Bayesian Individual-based Compartmental Inference), which allows for greater flexibility in model definition as well as supporting a richer array of data types. BICI will also include an R-based interface for various (e.g.  ASReml) styles of scripts for data input and model specification.
 
 ## Documentation
 
@@ -33,6 +36,6 @@ To edit and rebuild this software the following instructions must be followed:
 
 * This software relies of NW.js to run the graphical user interface. This can be downloaded [here](https://github.com/nwjs/nw.js) for your platform of choice.  
 
-* All the files and folders downloaded from this repository are copies directly into the NW folder. 
+* All the files and folders downloaded from this repository are copied directly into the NW folder. 
 
 * SIRE is run by clicking on "NW.exe".

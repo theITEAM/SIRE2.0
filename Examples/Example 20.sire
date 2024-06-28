@@ -31,7 +31,7 @@ varsely:-1
 runpopsel:3
 widthst:1007
 heightst:598
-datanote:"This example looks at additive genetic contributions to the susceptibility, infectivity and recoverability.\n\nIt assumes that the infection and recovery times for all individuals are known (DS 1). \n\nData was generated using a modified Doob-Gillespie algorithm for N_group=200 contact groups each containing G_size=10 individuals simulated until time t=100 (example dataset 22 for times and dataset 23 for the inverse of the relationship matrix).\n\nDatasets Sires and Progeny were loaded such that prediction accuracies for these two groups could be calculated.\n\nThe following parameters were used: β=0.01, γ=0.1, k=3, Ω_gg=0.33, Ω_gf=0.3, Ω_ff=1.68, Ψ_gg=0.77, Ψ_gf=0.56, Ψ_ff=1.12, and σ_G=0.25.\n\n"
+datanote:"This example looks at additive genetic contributions to the susceptibility, infectivity and recoverability.\n\nIt assumes that the infection and recovery times for all individuals are known (DS 1). \n\nData was generated using a modified Doob-Gillespie algorithm for N_group=200 contact groups each containing G_size=10 individuals simulated until time t=100 (example dataset 22 for times and dataset 23 for the inverse of the relationship matrix).\n\nDatasets Sires and Progeny were loaded such that prediction accuracies for these two groups could be calculated.\n\nThe following parameters were used: β=0.01, γ=0.1, k=3, Ω_gg=0.33, Ω_gf=0.3, Ω_ff=1.68, Ψ_gg=0.77, Ψ_gf=0.56, Ψ_ff=1.12, and σ_c=0.25.\n\n"
 modtype:1
 randon:1
 envon:1

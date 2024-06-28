@@ -827,8 +827,14 @@ void readfile(string file)                                                     /
     }
   }
 	
-	q_g_sum.resize(N); q_f_sum.resize(N); q_r_sum.resize(N); 
-	for(i = 0; i < N; i++){ q_g_sum[i] = 0; q_f_sum[i] = 0; q_r_sum[i] = 0;}
+	q_g_sum.resize(N); q_g_sum2.resize(N); 
+	q_f_sum.resize(N); q_f_sum2.resize(N); 
+	q_r_sum.resize(N); q_r_sum2.resize(N); 
+	for(i = 0; i < N; i++){
+		q_g_sum[i] = 0; q_g_sum2[i] = 0; 
+		q_f_sum[i] = 0; q_f_sum2[i] = 0; 
+		q_r_sum[i] = 0; q_r_sum2[i] = 0;
+	}
 	nqsum = 0;
 }
 

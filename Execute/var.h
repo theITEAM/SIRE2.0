@@ -100,6 +100,7 @@ vector <double> e_g, e_f, e_r;                                    // Residual co
 vector <double> q_g_bv, q_f_bv, q_r_bv;                           // Stores the breeding values
 double nqsum;
 vector <double> q_g_sum, q_f_sum, q_r_sum;                        // Calculates estimated breeding values
+vector <double> q_g_sum2, q_f_sum2, q_r_sum2;             
 
 struct PredAcc{
 	string name;

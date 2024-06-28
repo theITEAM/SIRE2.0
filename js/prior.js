@@ -218,13 +218,17 @@ function repspace(st){ return st.replace(/ /g,"-");}
 
 function addvar(clname,st,desc,min,max,col)                                                              // Adds a variables to the model
 {
-	if(desc.substr(0,15) == "This parameter ") desc = st+" "+desc.substring(15); 
+	if(desc.substr(0,15) == "This parameter "){
+		desc = adjust_name(st)+" "+desc.substring(15); 
+	}
 	
 	v = 0; while(v < param.length && param[v].name != st) v++;
 	if(v == param.length){
 		paramnew.push({name:st, classname:clname, prior:"Flat", desc:desc, val:[min,max], defval:[min,max], col:col});
 	}
 	else{
+		param[v].desc = desc;
+		
 		if(param[v].defval[0] != min || param[v].defval[1] != max){
 			if(param[v].val[0] == param[v].defval[0] && param[v].val[1] == param[v].defval[1]){
 				param[v].val[0] = min; param[v].val[1] = max; 

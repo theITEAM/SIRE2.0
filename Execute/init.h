@@ -316,10 +316,15 @@ void init()                                                       // Initialises
 
   if(noout == 0) traceinit();
   
-  q_g_sum.clear(); q_f_sum.clear(); if(mod == SIR) q_r_sum.clear();
+  q_g_sum.clear(); q_g_sum2.clear(); 
+	q_f_sum.clear(); q_f_sum2.clear(); 
+	if(mod == SIR){ q_r_sum.clear(); q_r_sum2.clear();}
+	
   nqsum = 0; 
 	for(i = 0; i < N; i++){ 
-		q_g_sum.push_back(0); q_f_sum.push_back(0); if(mod == SIR) q_r_sum.push_back(0);
+		q_g_sum.push_back(0); q_g_sum2.push_back(0); 
+		q_f_sum.push_back(0); q_f_sum2.push_back(0); 
+		if(mod == SIR){ q_r_sum.push_back(0); q_r_sum2.push_back(0);}
 	}
 }
 

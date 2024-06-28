@@ -153,6 +153,7 @@ var errmsg="", errormsg="";                                                     
 var child=[];                                                                      // MCMC run as a child process
 
 var nvar, varname=[], vardesc=[], vartype=[], varval=[], varCImin=[];              // Information about variables
+var ebv_str=[];                                                                       // Stores ebv string
 var varCImax=[], varESS=[], varGR=[], varmean=[];
 
 var nsamp=[], burnin, nsamppl, nsampread=[], sampthin;                             // Variable samples

@@ -31,7 +31,7 @@ varsely:-1
 runpopsel:3
 widthst:1000
 heightst:645
-datanote:"This example assumes that the infection times for all individuals are known (DS 1).\n\nIn this case the traits are assumed to depend on a SNP, a covariate (sex) along with individual-based residual variation.\n  \nData was generated using a modified Doob-Gillespie algorithm for N_group=50 contact groups each containing G_size=20 individuals (example dataset 9).\n\nThe starting times for different contact groups are stagered (as might be the case in a disease transmittion experiment). Groups 1-5 go from t=0 to t=40, groups 6-10 go from t=100 to t=140 etc... \n\nThe following parameters were used: β=0.015, a_g=0.4, a_f=0.3, Δ_g=0.4, Δ_f=0.1, b_g,Sex=0.2, b_f,Sex=0.3, Ψ_gg=0.5, Ψ_gf=0.15, Ψ_ff=0.5, σ_G=0.25 with A allele frequency p=0.3.\n\n"
+datanote:"This example assumes that the infection times for all individuals are known (DS 1).\n\nIn this case the traits are assumed to depend on a SNP, a covariate (sex) along with individual-based residual variation.\n  \nData was generated using a modified Doob-Gillespie algorithm for N_group=50 contact groups each containing G_size=20 individuals (example dataset 9).\n\nThe starting times for different contact groups are stagered (as might be the case in a disease transmittion experiment). Groups 1-5 go from t=0 to t=40, groups 6-10 go from t=100 to t=140 etc... \n\nThe following parameters were used: β=0.015, s_g=0.4, s_f=0.3, Δ_g=0.4, Δ_f=0.1, b_g,Sex=0.2, b_f,Sex=0.3, Ψ_gg=0.5, Ψ_gf=0.15, Ψ_ff=0.5, σ_c=0.25 with A allele frequency p=0.3.\n\n"
 modtype:1
 envon:1
 geon:1

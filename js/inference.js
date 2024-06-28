@@ -628,7 +628,7 @@ function funct(chi,ch)                                                          
 					nvar = Math.floor((tabs.length-1)/3);
 					for(v = 0; v < nvar; v++){
 						vartype[v] = tabs[3*v+1]; varname[v] = tabs[3*v+2]; vardesc[v] = tabs[3*v+3];
-					
+						varname[v] = adjust_name(varname[v]);
 						fi = 0; while(fi < filter.length && filter[fi] != vartype[v]) fi++;
 						if(fi == filter.length){
 							filter.push(vartype[v]);
@@ -753,6 +753,10 @@ function funct(chi,ch)                                                          
 			
 			case 'f':            // Major warning
 				alertp("WARNING: "+st);
+				break;
+				
+			case 'y':            // Estimated breeding values 
+				ebv_str[ch] = st;
 				break;
 				
  			case 'z':            // Comment
