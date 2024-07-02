@@ -12,11 +12,11 @@ SIRE 2.0 uses an efficient Markov chain Monte Carlo (MCMC) algorithm to draw sam
 
 The following files can be downloaded:
 
-* Windows: Download the file [SIRE_v2.0_windows.zip](https://github.com/theITEAM/SIRE2.0/releases/download/v2.01/SIRE_v2.0_windows.zip) and unzip. SIRE is run by clicking on the “SIRE.exe” icon.
+* Windows: Download the file [SIRE_v2.0_windows.zip](https://github.com/theITEAM/SIRE2.0/releases/download/v2.02/SIRE_v2.0_windows.zip) and unzip. SIRE is run by clicking on the “SIRE.exe” icon.
 
-* Linux: Download the file    [SIRE_v2.0_linux.tar.gz](https://github.com/theITEAM/SIRE2.0/releases/download/v2.01/SIRE_v2.0_linux.tar.gz). This can then be extracted by using the terminal command “tar -zxvf SIRE_v2.0_linux.tar.gz”. The code is executed using “./SIRE”.
+* Mac: Download the file [SIRE_v2.0_Mac.zip](https://github.com/theITEAM/SIRE2.0/releases/download/v2.02/SIRE_v2.0_Mac.zip). SIRE is run by clicking on the “SIRE.app” icon (if the error message “SIRE can’t be opened because it is from an unidentified developer…” appears, right clicking on “SIRE.app” and selecting “Open” will allow the option to run).
 
-* Mac: Download the file [SIRE_v2.0_Mac.zip](https://github.com/theITEAM/SIRE2.0/releases/download/v2.01/SIRE_v2.0_Mac.zip). SIRE is run by clicking on the “SIRE.app” icon (if the error message “SIRE can’t be opened because it is from an unidentified developer…” appears, right clicking on “SIRE.app” and selecting “Open” will allow the option to run).
+* Linux: Download the file    [SIRE_v2.0_linux.tar.gz](https://github.com/theITEAM/SIRE2.0/releases/download/v2.01/SIRE_v2.0_linux.tar.gz). This can then be extracted by using the terminal command “tar -zxvf SIRE_v2.0_linux.tar.gz”. The code is executed using “./SIRE”. Note, the linux version is slightly older, and some features have not been implemented yet. 
 
 ## Future developments
 
@@ -24,7 +24,7 @@ Efforts are currently underway to incorporate the Bayesian methodology presented
 
 ## Documentation
 
-Information about the software can be obtained from the [SIRE 2.0 manual](https://github.com/theITEAM/SIRE2.0/raw/master/SIRE%202.0%20Manual.pdf) or a [paper on BioRxiv](https://www.biorxiv.org/content/10.1101/618363v3.full))
+Information about the software can be obtained from the [SIRE 2.0 manual](https://github.com/theITEAM/SIRE2.0/raw/master/SIRE%202.0%20Manual.pdf) or a [paper on BioRxiv](https://www.biorxiv.org/content/10.1101/618363v3.full)
 
 ## Build
 
